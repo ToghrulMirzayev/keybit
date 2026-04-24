@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KeyBit — Software Outsourcing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --bg2: #ede8de;
+    --surface: #ffffff;
+    --surface2: #f0ece3;
+    --accent: #5db87a;
+    --accent2: #3d9e5e;
+    --accent-glow: rgba(93,184,122,0.18);
+    --text: #1a1a18;
+    --text2: #4a4a44;
+    --text3: #7a7a72;
+    --border: rgba(93,184,122,0.22);
+    --nav-bg: rgba(245,240,232,0.88);
+    --card: #fdfaf4;
+    --tag-bg: rgba(93,184,122,0.12);
+  }
+  [data-theme="dark"] {
+    --bg: #0e0f0d;
+    --bg2: #141612;
+    --surface: #181a16;
+    --surface2: #1e211b;
+    --accent: #5db87a;
+    --accent2: #4dcb72;
+    --accent-glow: rgba(93,184,122,0.15);
+    --text: #e8e8e0;
+    --text2: #aaa99f;
+    --text3: #666660;
+    --border: rgba(93,184,122,0.2);
+    --nav-bg: rgba(14,15,13,0.9);
+    --card: #161815;
+    --tag-bg: rgba(93,184,122,0.1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.4s, color 0.4s;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2.5rem;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s, border-color 0.4s;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.45rem;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+    text-decoration: none;
+  }
+  .logo span { color: var(--text); }
+
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+    align-items: center;
+  }
+  .nav-links a {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text2);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* Toggle */
+  .theme-toggle {
+    position: fixed; top: 14px; right: 2rem; z-index: 200;
+    width: 52px; height: 28px;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    cursor: pointer;
+    display: flex; align-items: center;
+    padding: 3px;
+    transition: background 0.35s, border-color 0.35s;
+  }
+  .toggle-knob {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--accent);
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+  }
+  [data-theme="dark"] .toggle-knob { transform: translateX(23px); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 2.5rem 5rem;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 56px 56px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .hero-blob {
+    position: absolute; top: -120px; right: -80px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner { max-width: 980px; position: relative; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--accent2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .hero-badge::before {
+    content: ''; display: inline-block;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent); animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)}
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    color: var(--text);
+    margin-bottom: 1.8rem;
+  }
+  h1 .green { color: var(--accent); }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--text2);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 2.8rem;
+    font-weight: 300;
+  }
+
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    border: none; cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 1.5px solid var(--border);
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    cursor: pointer;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    flex-wrap: wrap;
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.82rem; color: var(--text3); margin-top: 4px; letter-spacing: 0.04em; }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 6rem 2.5rem; }
+
+  .section-header { margin-bottom: 3.5rem; }
+  .section-tag {
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em;
+    color: var(--accent); font-weight: 600; margin-bottom: 0.7rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-tag::before { content:''; display:block; width:28px; height:2px; background:var(--accent); border-radius:2px; }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  .section-desc {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--text2);
+    max-width: 600px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--bg); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .about-text p {
+    font-size: 1.05rem; color: var(--text2); line-height: 1.8;
+    margin-bottom: 1.2rem; font-weight: 300;
+  }
+  .about-visual {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    display: flex; flex-direction: column; gap: 1.2rem;
+  }
+  .about-pill {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 18px;
+    font-size: 0.92rem; font-weight: 500; color: var(--text);
+  }
+  .about-pill .icon { font-size: 1.3rem; }
+
+  /* ─── SERVICES ─── */
+  #services { background: var(--bg2); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;
+  }
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 2rem;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .svc-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--tag-bg); display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 1.2rem;
+  }
+  .svc-title {
+    font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700;
+    color: var(--text); margin-bottom: 0.6rem;
+  }
+  .svc-desc { font-size: 0.88rem; color: var(--text2); line-height: 1.7; font-weight: 300; }
+
+  .svc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1.2rem; }
+  .svc-tag {
+    background: var(--tag-bg); border: 1px solid var(--border);
+    color: var(--accent2); font-size: 0.73rem; padding: 3px 10px;
+    border-radius: 999px; font-weight: 500;
+  }
+
+  /* ─── KILLER FEATURE ─── */
+  #zero-risk {
+    background: var(--accent);
+    position: relative; overflow: hidden;
+  }
+  #zero-risk .hero-grid-bg { opacity: 0.08; }
+
+  .zr-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    position: relative;
+  }
+  .zr-left { }
+  .zr-badge {
+    display: inline-block;
+    background: rgba(0,0,0,0.18);
+    color: #fff;
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em;
+    padding: 5px 14px; border-radius: 999px; margin-bottom: 1.4rem;
+    font-weight: 600;
+  }
+  #zero-risk h2 { color: #fff; }
+  .zr-desc { color: rgba(255,255,255,0.85); font-size: 1.05rem; line-height: 1.75; margin-top: 1rem; font-weight: 300; }
+
+  .zr-steps {
+    display: flex; flex-direction: column; gap: 1.2rem;
+    margin-top: 2rem;
+  }
+  .zr-step {
+    display: flex; gap: 1rem; align-items: flex-start;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 14px; padding: 1.2rem 1.4rem;
+    backdrop-filter: blur(4px);
+  }
+  .zr-num {
+    font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800;
+    color: rgba(255,255,255,0.35); line-height: 1; min-width: 32px;
+  }
+  .zr-step-text h4 { color: #fff; font-weight: 600; font-size: 0.95rem; margin-bottom: 3px; }
+  .zr-step-text p { color: rgba(255,255,255,0.75); font-size: 0.83rem; line-height: 1.5; font-weight: 300; }
+
+  .zr-right {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 24px; padding: 2.5rem;
+    backdrop-filter: blur(8px);
+  }
+  .zr-highlight {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 800; color: #fff; line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .zr-checks { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+  .zr-checks li {
+    display: flex; align-items: center; gap: 10px;
+    color: rgba(255,255,255,0.9); font-size: 0.95rem;
+  }
+  .zr-checks li::before {
+    content: '✓'; width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+    line-height: 22px; text-align: center;
+  }
+
+  /* ─── TECH ─── */
+  #tech { background: var(--bg); }
+  .tech-categories { display: flex; flex-direction: column; gap: 2.5rem; }
+  .tech-cat-title {
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--text3); font-weight: 600; margin-bottom: 1rem;
+  }
+  .tech-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tech-pill {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    padding: 8px 18px; border-radius: 999px;
+    font-size: 0.85rem; font-weight: 500;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+    cursor: default;
+  }
+  .tech-pill:hover {
+    background: var(--tag-bg); border-color: var(--accent); color: var(--accent2);
+    transform: translateY(-2px);
+  }
+
+  /* ─── LOCATIONS ─── */
+  #locations { background: var(--bg2); }
+  .locations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+  .loc-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; padding: 2rem;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .loc-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .loc-flag { font-size: 2.5rem; margin-bottom: 1rem; }
+  .loc-country { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--text); }
+  .loc-city { font-size: 0.85rem; color: var(--text3); margin-top: 3px; }
+  .loc-desc { font-size: 0.88rem; color: var(--text2); margin-top: 0.8rem; line-height: 1.65; font-weight: 300; }
+
+  .multi-geo {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 2.5rem;
+  }
+  .multi-geo h3 {
+    font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700;
+    color: var(--text); margin-bottom: 1.5rem;
+  }
+  .geo-benefits { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
+  .geo-benefit {
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .geo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex-shrink: 0; }
+  .geo-benefit-text { font-size: 0.88rem; color: var(--text2); line-height: 1.6; font-weight: 300; }
+  .geo-benefit-text strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 2px; font-size: 0.9rem; }
+
+  /* ─── WHY ─── */
+  #why { background: var(--bg); }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+  .why-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; padding: 1.8rem;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .why-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .why-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .why-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+  .why-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.7; font-weight: 300; }
+
+  /* ─── PROCESS ─── */
+  #process { background: var(--bg2); }
+  .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+  .proc-step {
+    background: var(--card); padding: 2rem 1.5rem;
+    position: relative;
+  }
+  .proc-num {
+    font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800;
+    color: var(--accent-glow); line-height: 1; margin-bottom: 1rem;
+    color: var(--border);
+  }
+  [data-theme="dark"] .proc-num { color: rgba(93,184,122,0.15); }
+  .proc-num { color: rgba(93,184,122,0.3); }
+  .proc-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+  .proc-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.6; font-weight: 300; }
+
+  /* ─── CONTACT ─── */
+  #contacts { background: var(--bg); }
+  .contact-wrapper {
+    max-width: 900px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+  }
+  .contact-left h2 { margin-bottom: 1rem; }
+  .contact-left p { color: var(--text2); font-size: 1rem; line-height: 1.75; font-weight: 300; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: var(--text2);
+    font-size: 0.92rem; transition: color 0.2s;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .contact-link:hover { color: var(--accent); border-color: var(--accent); }
+  .contact-link .ci { font-size: 1.2rem; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 5px; }
+  .form-field label { font-size: 0.78rem; color: var(--text3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; }
+  .form-field input, .form-field textarea, .form-field select {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--accent); }
+  .form-field textarea { min-height: 120px; resize: vertical; }
+  .form-field select option { background: var(--surface); }
+  .form-submit {
+    width: 100%;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 10px;
+    padding: 14px; font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: var(--accent2); transform: translateY(-2px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--bg2); border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer .logo { font-size: 1.15rem; }
+  footer p { font-size: 0.8rem; color: var(--text3); }
+
+  /* ─── SCROLL FADE IN ─── */
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s, transform 0.6s; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .about-grid, .zr-inner, .contact-wrapper { grid-template-columns: 1fr; }
+    nav { padding: 0 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    #hero { padding: 7rem 1.5rem 4rem; }
+    h1 { letter-spacing: -1px; }
+    .hero-stats { gap: 1.8rem; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">
+  <div class="toggle-knob" id="knob">☀️</div>
+</button>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="logo">Key<span>Bit</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#zero-risk">Zero Risk</a></li>
+    <li><a href="#tech">Tech</a></li>
+    <li><a href="#locations">Locations</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contacts" class="btn-primary" style="padding:8px 20px;border-radius:6px;">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-blob"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Software Development Partner</div>
+    <h1>We build.<br>You decide<br>if you <span class="green">love it.</span></h1>
+    <p class="hero-sub">KeyBit is an outsourcing company that delivers working demos before you pay a single cent. No risk, no guessing — just results you can see and touch.</p>
+    <div class="hero-ctas">
+      <a href="#contacts" class="btn-primary">Start a Project</a>
+      <a href="#zero-risk" class="btn-outline">How it works →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Countries</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">7d</div>
+        <div class="stat-label">Avg. Demo Delivery</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0$</div>
+        <div class="stat-label">Upfront Payment</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header fade-in">
+    <div class="section-tag">About KeyBit</div>
+    <h2>Engineering excellence,<br>human partnership</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text fade-in">
+      <p>KeyBit is a software development company built on a simple but radical idea: clients should see what they're paying for before they pay for it. We design, develop, and deliver — then let you decide.</p>
+      <p>Our teams combine senior engineers, designers, and product thinkers spread across Azerbaijan, Georgia, and Poland — giving you access to top talent with flexible time zones and competitive rates.</p>
+      <p>From MVP launches to enterprise-grade systems, we cover the full product lifecycle with the same obsessive attention to quality at every stage.</p>
+    </div>
+    <div class="about-visual fade-in">
+      <div class="about-pill"><span class="icon">🚀</span> Fast demo delivery — within days, not months</div>
+      <div class="about-pill"><span class="icon">🤝</span> Pay only when you're satisfied</div>
+      <div class="about-pill"><span class="icon">🌍</span> Distributed team across 3 countries</div>
+      <div class="about-pill"><span class="icon">⚙️</span> Full-cycle product development</div>
+      <div class="about-pill"><span class="icon">📐</span> Senior engineers, no juniors on critical paths</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header fade-in">
+    <div class="section-tag">Services</div>
+    <h2>Everything you need<br>to ship great software</h2>
+    <p class="section-desc">Whether you need a dedicated team, a single expert, or a complete technical assessment — we have you covered.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-in">
+      <div class="svc-icon">🏗️</div>
+      <div class="svc-title">Outsource Development</div>
+      <div class="svc-desc">We take full ownership of your project — from architecture to deployment. You get a working product, we handle the complexity.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">Web Apps</span>
+        <span class="svc-tag">Mobile</span>
+        <span class="svc-tag">APIs</span>
+        <span class="svc-tag">Full-cycle</span>
+      </div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="svc-icon">👥</div>
+      <div class="svc-title">Team Augmentation (Outstaff)</div>
+      <div class="svc-desc">Need to scale your engineering team fast? We embed our engineers directly into your workflow, processes, and tooling.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">Dedicated Devs</span>
+        <span class="svc-tag">Staff Ext.</span>
+        <span class="svc-tag">Long-term</span>
+      </div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="svc-icon">📱</div>
+      <div class="svc-title">Mobile Development</div>
+      <div class="svc-desc">Native iOS & Android or cross-platform React Native / Flutter apps — built to perform and delight users.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">iOS</span>
+        <span class="svc-tag">Android</span>
+        <span class="svc-tag">React Native</span>
+        <span class="svc-tag">Flutter</span>
+      </div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="svc-icon">🌐</div>
+      <div class="svc-title">Web Development</div>
+      <div class="svc-desc">From SaaS dashboards and marketplaces to corporate websites and complex portals — we build web products that scale.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">React</span>
+        <span class="svc-tag">Next.js</span>
+        <span class="svc-tag">SaaS</span>
+        <span class="svc-tag">PWA</span>
+      </div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="svc-icon">🔍</div>
+      <div class="svc-title">Technical Audit & Refactoring</div>
+      <div class="svc-desc">Legacy codebase slowing you down? We assess your architecture, identify bottlenecks, and restructure for long-term health.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">Code Audit</span>
+        <span class="svc-tag">Refactoring</span>
+        <span class="svc-tag">Performance</span>
+        <span class="svc-tag">Security</span>
+      </div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="svc-icon">⚡</div>
+      <div class="svc-title">MVP & Rapid Prototyping</div>
+      <div class="svc-desc">Validate your idea with a working product in record time. We help startups and innovators go from concept to demo in days.</div>
+      <div class="svc-tags">
+        <span class="svc-tag">Startups</span>
+        <span class="svc-tag">MVP</span>
+        <span class="svc-tag">Prototype</span>
+        <span class="svc-tag">Fast</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ZERO RISK -->
+<section id="zero-risk">
+  <div class="hero-grid-bg"></div>
+  <div class="zr-inner">
+    <div class="zr-left fade-in">
+      <span class="zr-badge">⚡ Our Differentiator</span>
+      <h2 style="color:#fff;">Demo first.<br>Pay later.<br>Zero risk.</h2>
+      <p class="zr-desc">We believe trust is earned through action, not promises. That's why we always start by building and showing — before any invoice is sent.</p>
+      <div class="zr-steps">
+        <div class="zr-step">
+          <div class="zr-num">01</div>
+          <div class="zr-step-text">
+            <h4>We hear your idea</h4>
+            <p>A short discovery call to understand your goals, constraints, and vision.</p>
+          </div>
+        </div>
+        <div class="zr-step">
+          <div class="zr-num">02</div>
+          <div class="zr-step-text">
+            <h4>We build a working demo</h4>
+            <p>Our team dives in and delivers a real, interactive demo — typically within a week.</p>
+          </div>
+        </div>
+        <div class="zr-step">
+          <div class="zr-num">03</div>
+          <div class="zr-step-text">
+            <h4>You decide</h4>
+            <p>Love it? Let's go. Not quite right? We adjust or part ways — no hard feelings, no invoice.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="zr-right fade-in">
+      <div class="zr-highlight">"See it before you pay for it"</div>
+      <ul class="zr-checks">
+        <li>No upfront payment required</li>
+        <li>Tangible proof of our speed and quality</li>
+        <li>Eliminate the risk of hiring the wrong team</li>
+        <li>Real working software, not a proposal PDF</li>
+        <li>Transparent pricing after demo approval</li>
+        <li>You stay in control at every step</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section id="tech">
+  <div class="section-header fade-in">
+    <div class="section-tag">Technology</div>
+    <h2>Tools we trust,<br>tech we love</h2>
+    <p class="section-desc">We work with modern, battle-tested technologies across every layer of the stack.</p>
+  </div>
+  <div class="tech-categories fade-in">
+    <div>
+      <div class="tech-cat-title">Languages</div>
+      <div class="tech-pills">
+        <span class="tech-pill">TypeScript</span>
+        <span class="tech-pill">JavaScript</span>
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">Go</span>
+        <span class="tech-pill">Rust</span>
+        <span class="tech-pill">Java</span>
+        <span class="tech-pill">Kotlin</span>
+        <span class="tech-pill">Swift</span>
+        <span class="tech-pill">Dart</span>
+        <span class="tech-pill">C#</span>
+        <span class="tech-pill">PHP</span>
+      </div>
+    </div>
+    <div>
+      <div class="tech-cat-title">Frontend & Mobile</div>
+      <div class="tech-pills">
+        <span class="tech-pill">React</span>
+        <span class="tech-pill">Next.js</span>
+        <span class="tech-pill">Vue.js</span>
+        <span class="tech-pill">Nuxt</span>
+        <span class="tech-pill">Angular</span>
+        <span class="tech-pill">React Native</span>
+        <span class="tech-pill">Flutter</span>
+        <span class="tech-pill">Expo</span>
+        <span class="tech-pill">Tailwind CSS</span>
+      </div>
+    </div>
+    <div>
+      <div class="tech-cat-title">Backend & Frameworks</div>
+      <div class="tech-pills">
+        <span class="tech-pill">Node.js</span>
+        <span class="tech-pill">NestJS</span>
+        <span class="tech-pill">Express</span>
+        <span class="tech-pill">FastAPI</span>
+        <span class="tech-pill">Django</span>
+        <span class="tech-pill">Spring Boot</span>
+        <span class="tech-pill">Laravel</span>
+        <span class="tech-pill">.NET Core</span>
+        <span class="tech-pill">GraphQL</span>
+        <span class="tech-pill">REST</span>
+        <span class="tech-pill">gRPC</span>
+      </div>
+    </div>
+    <div>
+      <div class="tech-cat-title">Databases</div>
+      <div class="tech-pills">
+        <span class="tech-pill">PostgreSQL</span>
+        <span class="tech-pill">MySQL</span>
+        <span class="tech-pill">MongoDB</span>
+        <span class="tech-pill">Redis</span>
+        <span class="tech-pill">Elasticsearch</span>
+        <span class="tech-pill">ClickHouse</span>
+        <span class="tech-pill">Cassandra</span>
+        <span class="tech-pill">SQLite</span>
+        <span class="tech-pill">Firestore</span>
+        <span class="tech-pill">Supabase</span>
+      </div>
+    </div>
+    <div>
+      <div class="tech-cat-title">Message Brokers & Queues</div>
+      <div class="tech-pills">
+        <span class="tech-pill">Kafka</span>
+        <span class="tech-pill">RabbitMQ</span>
+        <span class="tech-pill">NATS</span>
+        <span class="tech-pill">Redis Pub/Sub</span>
+        <span class="tech-pill">AWS SQS</span>
+        <span class="tech-pill">BullMQ</span>
+      </div>
+    </div>
+    <div>
+      <div class="tech-cat-title">Cloud & DevOps</div>
+      <div class="tech-pills">
+        <span class="tech-pill">AWS</span>
+        <span class="tech-pill">GCP</span>
+        <span class="tech-pill">Azure</span>
+        <span class="tech-pill">Docker</span>
+        <span class="tech-pill">Kubernetes</span>
+        <span class="tech-pill">Terraform</span>
+        <span class="tech-pill">GitHub Actions</span>
+        <span class="tech-pill">GitLab CI</span>
+        <span class="tech-pill">Nginx</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATIONS -->
+<section id="locations">
+  <div class="section-header fade-in">
+    <div class="section-tag">Locations</div>
+    <h2>Local talent,<br>global thinking</h2>
+    <p class="section-desc">We operate from three countries, giving our clients access to diverse talent pools, favorable time zones, and competitive rates.</p>
+  </div>
+  <div class="locations-grid">
+    <div class="loc-card fade-in">
+      <div class="loc-flag">🇦🇿</div>
+      <div class="loc-country">Azerbaijan</div>
+      <div class="loc-city">Baku</div>
+      <div class="loc-desc">Our founding hub. Home to our leadership, core R&D, and a rapidly growing tech scene with strong engineering talent.</div>
+    </div>
+    <div class="loc-card fade-in">
+      <div class="loc-flag">🇬🇪</div>
+      <div class="loc-country">Georgia</div>
+      <div class="loc-city">Tbilisi</div>
+      <div class="loc-desc">A thriving startup ecosystem with highly skilled engineers and a business-friendly environment that attracts global companies.</div>
+    </div>
+    <div class="loc-card fade-in">
+      <div class="loc-flag">🇵🇱</div>
+      <div class="loc-country">Poland</div>
+      <div class="loc-city">Warsaw / Kraków</div>
+      <div class="loc-desc">Our European gateway. EU-based operations with world-class engineers and convenient time zones for Western clients.</div>
+    </div>
+  </div>
+  <div class="multi-geo fade-in">
+    <h3>Why multi-geography is your advantage</h3>
+    <div class="geo-benefits">
+      <div class="geo-benefit">
+        <div class="geo-dot"></div>
+        <div class="geo-benefit-text">
+          <strong>Time zone coverage</strong>Overlap with Europe, Middle East, and partial US East Coast — your messages don't wait overnight.
+        </div>
+      </div>
+      <div class="geo-benefit">
+        <div class="geo-dot"></div>
+        <div class="geo-benefit-text">
+          <strong>Risk distribution</strong>Teams across different regions ensure business continuity regardless of local disruptions.
+        </div>
+      </div>
+      <div class="geo-benefit">
+        <div class="geo-dot"></div>
+        <div class="geo-benefit-text">
+          <strong>Talent diversity</strong>Access to a broader, complementary skill pool — different education systems, tech cultures, and problem-solving styles.
+        </div>
+      </div>
+      <div class="geo-benefit">
+        <div class="geo-dot"></div>
+        <div class="geo-benefit-text">
+          <strong>Competitive pricing</strong>High-quality engineering without Western European or US price tags. Value without compromise.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="section-header fade-in">
+    <div class="section-tag">Why KeyBit</div>
+    <h2>Not just a vendor.<br>A partner.</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card fade-in">
+      <div class="why-icon">🎯</div>
+      <div class="why-title">Outcome-focused</div>
+      <div class="why-desc">We measure success by your business results, not hours logged or tickets closed. We're invested in your outcomes.</div>
+    </div>
+    <div class="why-card fade-in">
+      <div class="why-icon">🔒</div>
+      <div class="why-title">IP Protection</div>
+      <div class="why-desc">Full NDA and IP assignment from day one. All code, designs, and assets produced belong entirely to you.</div>
+    </div>
+    <div class="why-card fade-in">
+      <div class="why-icon">📣</div>
+      <div class="why-title">Radical Transparency</div>
+      <div class="why-desc">Weekly demos, daily standups if needed, and honest updates — even when things are hard. No surprises.</div>
+    </div>
+    <div class="why-card fade-in">
+      <div class="why-icon">🧩</div>
+      <div class="why-title">Flexible Engagement</div>
+      <div class="why-desc">Fixed price, time & materials, or dedicated team — we adapt to your budget model and project needs.</div>
+    </div>
+    <div class="why-card fade-in">
+      <div class="why-icon">🏆</div>
+      <div class="why-title">Senior-first Teams</div>
+      <div class="why-desc">No bait-and-switch. The engineers on your project are the ones you meet. Mostly senior and mid-level talent.</div>
+    </div>
+    <div class="why-card fade-in">
+      <div class="why-icon">♻️</div>
+      <div class="why-title">Long-term Mindset</div>
+      <div class="why-desc">We write code as if we'll maintain it forever. Clean architecture, proper docs, and test coverage are non-negotiable.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-header fade-in">
+    <div class="section-tag">How We Work</div>
+    <h2>From conversation<br>to shipped product</h2>
+  </div>
+  <div class="process-steps fade-in">
+    <div class="proc-step">
+      <div class="proc-num">01</div>
+      <div class="proc-title">Discovery Call</div>
+      <div class="proc-desc">30-min call to understand your product, team, and goals. We ask the right questions.</div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">02</div>
+      <div class="proc-title">Scoping</div>
+      <div class="proc-desc">We map out scope, tech stack, and timeline. No fluff — just clarity.</div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">03</div>
+      <div class="proc-title">Demo Sprint</div>
+      <div class="proc-desc">Our team builds a working demo or proof-of-concept within days.</div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">04</div>
+      <div class="proc-title">Your Approval</div>
+      <div class="proc-desc">You review, give feedback, and decide whether to proceed. No pressure.</div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">05</div>
+      <div class="proc-title">Full Development</div>
+      <div class="proc-desc">We build the full product with regular demos, sprints, and updates.</div>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">06</div>
+      <div class="proc-title">Launch & Support</div>
+      <div class="proc-desc">Deployment, handover, and ongoing support as you scale.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section id="contacts">
+  <div class="contact-wrapper">
+    <div class="contact-left fade-in">
+      <div class="section-tag">Contact</div>
+      <h2>Let's build<br>something together</h2>
+      <p>Tell us about your project and we'll get back to you within 24 hours. No commitment — just a conversation.</p>
+      <div class="contact-links">
+        <a href="mailto:hello@keybit.dev" class="contact-link"><span class="ci">✉️</span> hello@keybit.dev</a>
+        <a href="https://t.me/keybit" class="contact-link"><span class="ci">💬</span> @keybit on Telegram</a>
+        <a href="https://linkedin.com/company/keybit" class="contact-link"><span class="ci">💼</span> LinkedIn</a>
+      </div>
+    </div>
+    <div class="contact-form fade-in">
+      <div class="form-field">
+        <label>Your Name</label>
+        <input type="text" placeholder="Alex Johnson"/>
+      </div>
+      <div class="form-field">
+        <label>Email</label>
+        <input type="email" placeholder="alex@company.com"/>
+      </div>
+      <div class="form-field">
+        <label>Service</label>
+        <select>
+          <option>Outsource Development</option>
+          <option>Team Augmentation</option>
+          <option>Mobile App</option>
+          <option>Web Application</option>
+          <option>Technical Audit</option>
+          <option>MVP / Prototype</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Tell us about your project</label>
+        <textarea placeholder="Briefly describe your idea, goals, or problem you're solving..."></textarea>
+      </div>
+      <button class="form-submit">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#hero" class="logo">Key<span>Bit</span></a>
+  <p>© 2025 KeyBit. All rights reserved. Azerbaijan · Georgia · Poland</p>
+  <p style="font-size:0.78rem;color:var(--text3);">Demo first. Always.</p>
+</footer>
+
+<script>
+  // Theme toggle
+  function toggleTheme() {
+    const html = document.documentElement;
+    const knob = document.getElementById('knob');
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    knob.textContent = isDark ? '☀️' : '🌙';
+  }
+
+  // Scroll fade in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
