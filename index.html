@@ -223,9 +223,31 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2.5rem 0 
 .fade-in.visible{opacity:1;transform:translateY(0)}
 @media (max-width:1024px){.services-grid{grid-template-columns:repeat(2,1fr)}.loc-grid{grid-template-columns:1fr}.why-grid{grid-template-columns:repeat(2,1fr)}.tech-wrapper,.proc-wrapper,.about-grid{grid-template-columns:1fr;gap:3rem}.about-right,.tech-sidebar,.proc-sidebar{position:static}.multi-geo{grid-template-columns:1fr;gap:2rem}.zr-highlight-box{grid-template-columns:1fr;gap:2rem}.zr-process{grid-template-columns:1fr}.zr-process::before{display:none}.hero-meta{grid-template-columns:repeat(2,1fr);gap:1.5rem 2rem}}
 @media (max-width:720px){.nav-links{display:none}.container,.nav-inner,.footer-inner,.zr-inner{padding:0 1.25rem}section{padding:5rem 0}#hero{padding:7.5rem 0 3.5rem}.services-grid{grid-template-columns:1fr}.why-grid{grid-template-columns:1fr}.zr-highlight-box{padding:2rem}.zr-checks{grid-template-columns:1fr}.contact-wrapper{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.about-left{padding-right:0}.multi-geo{padding:1.8rem}.geo-benefits{grid-template-columns:1fr}.contact-form{padding:1.5rem}.footer-inner{flex-direction:column;text-align:center}.footer-meta{flex-direction:column;gap:0.5rem}.hero-meta{margin-top:3.5rem;padding-top:2rem}}
+.coming-soon-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(241,235,224,0.55);backdrop-filter:blur(18px) saturate(1.1);-webkit-backdrop-filter:blur(18px) saturate(1.1);padding:1.5rem;animation:csFade 0.6s ease-out}
+[data-theme="dark"] .coming-soon-overlay{background:rgba(13,15,12,0.6)}
+@keyframes csFade{from{opacity:0}to{opacity:1}}
+@keyframes csUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.cs-card{background:var(--card);border:1px solid var(--border-strong);border-radius:18px;padding:3.5rem 3rem;max-width:480px;width:100%;text-align:center;box-shadow:var(--shadow-lg);position:relative;animation:csUp 0.7s cubic-bezier(.3,.7,.4,1) 0.1s both}
+.cs-logo{display:inline-flex;align-items:center;gap:11px;margin-bottom:2.2rem;font-family:'Fraunces',serif;font-weight:500;font-size:1.4rem;color:var(--text);letter-spacing:-0.02em}
+.cs-logo .logo-mark{width:32px;height:32px}
+.cs-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--accent2);font-weight:500;margin-bottom:1.4rem;display:inline-flex;align-items:center;gap:10px;justify-content:center}
+.cs-eyebrow .cs-pulse{width:8px;height:8px;border-radius:50%;background:var(--accent);position:relative;display:inline-block}
+.cs-eyebrow .cs-pulse::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);animation:csPulse 2s ease-out infinite}
+@keyframes csPulse{0%{opacity:1;transform:scale(0.8)}100%{opacity:0;transform:scale(1.8)}}
+.cs-title{font-family:'Fraunces',serif;font-size:clamp(2.4rem,5vw,3.4rem);font-weight:400;letter-spacing:-0.03em;line-height:1.05;color:var(--text);margin-bottom:1.2rem}
+.cs-title em{font-style:italic;color:var(--accent2);font-weight:400}
+.cs-desc{font-size:0.98rem;color:var(--text2);line-height:1.7;font-weight:400;max-width:380px;margin:0 auto 2rem}
+.cs-divider{width:32px;height:1px;background:var(--border-strong);margin:0 auto 1.5rem}
+.cs-meta{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase}
+.cs-meta span{color:var(--text2)}
+body.cs-locked{overflow:hidden}
 </style>
 </head>
-<body>
+<body class="cs-locked">
+
+<!-- Coming Soon overlay loads here from coming-soon.html. Remove this tag (and the cs-locked class on body) to disable. -->
+<div id="coming-soon-mount" data-src="coming-soon.html"></div>
+
 
 <nav>
   <div class="nav-inner">
@@ -235,8 +257,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2.5rem 0 
           <path class="lm-bracket" d="M 4 3 L 4 27"/>
           <path class="lm-bracket" d="M 4 3 L 9 3"/>
           <path class="lm-bracket" d="M 4 27 L 9 27"/>
-          <line class="lm-slash" x1="22" y1="3" x2="12" y2="27"/>
-          <circle class="lm-dot" cx="22" cy="27" r="2.6"/>
+          <line class="lm-slash" x1="18" y1="9" x2="11" y2="20"/>
+          <circle class="lm-dot" cx="19" cy="20" r="2.6"/>
         </svg>
       </span>
       <span class="logo-text"><span class="lt-key">Key</span><span class="lt-bit">bit</span></span>
@@ -678,7 +700,7 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2.5rem 0 
 
 <footer>
   <div class="footer-inner">
-    <a href="#hero" class="logo"><span class="logo-mark"><svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><line class="lm-bracket" x1="6" y1="3" x2="6" y2="27"/><line class="lm-slash" x1="22" y1="3" x2="6" y2="15"/><line class="lm-bracket" x1="6" y1="15" x2="18" y2="27"/><circle class="lm-dot" cx="23" cy="27" r="2.4"/></svg></span><span class="logo-text"><span class="lt-key">Key</span><span class="lt-bit">bit</span></span></a>
+    <a href="#hero" class="logo"><span class="logo-mark"><svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><path class="lm-bracket" d="M 4 3 L 4 27"/><path class="lm-bracket" d="M 4 3 L 9 3"/><path class="lm-bracket" d="M 4 27 L 9 27"/><line class="lm-slash" x1="18" y1="9" x2="11" y2="20"/><circle class="lm-dot" cx="19" cy="20" r="2.6"/></svg></span><span class="logo-text"><span class="lt-key">Key</span><span class="lt-bit">bit</span></span></a>
     <div class="footer-meta">
       <span>&copy; 2026 KeyBit</span>
       <span>Baku &middot; Tbilisi &middot; Warsaw</span>
@@ -688,6 +710,18 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2.5rem 0 
 </footer>
 
 <script>
+(function loadComingSoon(){
+  const mount=document.getElementById('coming-soon-mount');
+  if(!mount)return;
+  const src=mount.getAttribute('data-src');
+  if(!src)return;
+  fetch(src).then(r=>r.ok?r.text():Promise.reject()).then(html=>{
+    mount.outerHTML=html;
+  }).catch(()=>{
+    document.body.classList.remove('cs-locked');
+    mount.remove();
+  });
+})();
 function toggleTheme(){
   const html=document.documentElement;
   const isDark=html.getAttribute('data-theme')==='dark';
