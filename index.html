@@ -261,9 +261,9 @@ body.cs-locked{overflow:hidden}
 @media (max-width:720px){.lang-trigger-code{display:none}.lang-trigger{padding:7px 9px}}
 </style>
 </head>
-<body class="cs-locked">
+<body>
 
-<!-- Coming Soon overlay loads here from coming-soon.html. Remove this tag (and the cs-locked class on body) to disable. -->
+<!-- Coming Soon overlay loads here from coming-soon.html when KEYBIT_FLAGS.comingSoonEnabled is true. -->
 <div id="coming-soon-mount" data-src="coming-soon.html"></div>
 
 
@@ -753,13 +753,17 @@ body.cs-locked{overflow:hidden}
   </div>
 </footer>
 
+<script src="config.js"></script>
 <script src="translations.js"></script>
 <script>
 (function loadComingSoon(){
   const mount=document.getElementById('coming-soon-mount');
   if(!mount)return;
+  const enabled=window.KEYBIT_FLAGS&&window.KEYBIT_FLAGS.comingSoonEnabled;
+  if(!enabled){mount.remove();return;}
   const src=mount.getAttribute('data-src');
-  if(!src)return;
+  if(!src){mount.remove();return;}
+  document.body.classList.add('cs-locked');
   fetch(src).then(r=>r.ok?r.text():Promise.reject()).then(html=>{
     mount.outerHTML=html;
     applyLang(currentLang);
