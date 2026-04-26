@@ -33,8 +33,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);bac
 .nav-links a{font-size:0.82rem;font-weight:500;color:var(--text2);text-decoration:none;letter-spacing:0.01em;transition:color 0.2s,background 0.2s;padding:8px 14px;border-radius:6px}
 .nav-links a:hover{color:var(--text);background:var(--accent-soft)}
 .nav-actions{display:flex;align-items:center;gap:0.75rem}
-.nav-cta{background:var(--text);color:var(--bg);padding:9px 18px;border-radius:7px;font-weight:500;font-size:0.82rem;text-decoration:none;transition:opacity 0.2s,transform 0.15s}
-.nav-cta:hover{opacity:0.85;transform:translateY(-1px)}
+.nav-cta{background:var(--accent);color:#fff;padding:9px 18px;border-radius:7px;font-weight:500;font-size:0.82rem;text-decoration:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 0 0 0 var(--accent-glow)}
+.nav-cta:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 2px 8px var(--accent-glow),0 0 0 3px var(--accent-soft)}
+[data-theme="dark"] .nav-cta{color:var(--bg)}
 .theme-toggle{width:44px;height:24px;background:var(--surface2);border:1px solid var(--border-strong);border-radius:999px;cursor:pointer;display:flex;align-items:center;padding:2px;transition:background 0.35s,border-color 0.35s}
 .toggle-knob{width:18px;height:18px;border-radius:50%;background:var(--accent);transition:transform 0.35s cubic-bezier(.4,0,.2,1);box-shadow:0 1px 3px rgba(0,0,0,0.15)}
 [data-theme="dark"] .toggle-knob{transform:translateX(20px)}
@@ -241,6 +242,23 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2.5rem 0 
 .cs-meta{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase}
 .cs-meta span{color:var(--text2)}
 body.cs-locked{overflow:hidden}
+.lang-dropdown{position:relative;display:inline-block}
+.lang-trigger{display:inline-flex;align-items:center;gap:7px;background:var(--surface2);border:1px solid var(--border-strong);border-radius:8px;padding:7px 11px;cursor:pointer;font-family:'Inter',sans-serif;color:var(--text);transition:all 0.2s;font-size:0.78rem;font-weight:500}
+.lang-trigger:hover{border-color:var(--text);background:var(--surface)}
+.lang-flag{width:16px;height:11px;border-radius:2px;overflow:hidden;flex-shrink:0;display:inline-block;line-height:0;box-shadow:0 0 0 0.5px rgba(0,0,0,0.1)}
+.lang-flag svg{display:block;width:100%;height:100%}
+.lang-trigger-code{font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:600;letter-spacing:0.04em}
+.lang-chevron{transition:transform 0.25s;color:var(--text3)}
+.lang-dropdown.open .lang-chevron{transform:rotate(180deg)}
+.lang-menu{position:absolute;top:calc(100% + 6px);right:0;background:var(--card);border:1px solid var(--border-strong);border-radius:10px;padding:4px;min-width:140px;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity 0.2s,transform 0.2s,visibility 0.2s;z-index:50}
+.lang-dropdown.open .lang-menu{opacity:1;visibility:visible;transform:translateY(0)}
+.lang-option{display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:none;padding:8px 11px;border-radius:7px;cursor:pointer;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:500;color:var(--text2);text-align:left;transition:background 0.15s,color 0.15s}
+.lang-option:hover{background:var(--accent-soft);color:var(--text)}
+.lang-option.active{color:var(--text);background:var(--accent-soft)}
+.lang-option-name{flex:1}
+.lang-option-check{color:var(--accent2);opacity:0;transition:opacity 0.15s;font-size:0.85rem}
+.lang-option.active .lang-option-check{opacity:1}
+@media (max-width:720px){.lang-trigger-code{display:none}.lang-trigger{padding:7px 9px}}
 </style>
 </head>
 <body class="cs-locked">
@@ -264,19 +282,45 @@ body.cs-locked{overflow:hidden}
       <span class="logo-text"><span class="lt-key">Key</span><span class="lt-bit">bit</span></span>
     </a>
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#zero-risk">Zero Risk</a></li>
-      <li><a href="#tech">Tech</a></li>
-      <li><a href="#locations">Locations</a></li>
-      <li><a href="#why">Why us</a></li>
-      <li><a href="#process">Process</a></li>
+      <li><a href="#about" data-i18n="nav.about">About</a></li>
+      <li><a href="#services" data-i18n="nav.services">Services</a></li>
+      <li><a href="#zero-risk" data-i18n="nav.zeroRisk">Zero Risk</a></li>
+      <li><a href="#tech" data-i18n="nav.tech">Tech</a></li>
+      <li><a href="#locations" data-i18n="nav.locations">Locations</a></li>
+      <li><a href="#why" data-i18n="nav.why">Why us</a></li>
+      <li><a href="#process" data-i18n="nav.process">Process</a></li>
     </ul>
     <div class="nav-actions">
+      <div class="lang-dropdown" id="lang-dropdown">
+        <button class="lang-trigger" type="button" onclick="toggleLangMenu(event)" aria-haspopup="listbox" aria-expanded="false">
+          <span class="lang-flag" id="lang-trigger-flag">
+            <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg"><clipPath id="t"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="s"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#t)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#s)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>
+          </span>
+          <span class="lang-trigger-code" id="lang-trigger-code">EN</span>
+          <svg class="lang-chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="lang-menu" role="listbox">
+          <button class="lang-option active" type="button" data-lang="en" onclick="setLang('en')" role="option">
+            <span class="lang-flag"><svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg"><clipPath id="t2"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="s2"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><g clip-path="url(#t2)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#s2)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg></span>
+            <span class="lang-option-name">English</span>
+            <span class="lang-option-check">✓</span>
+          </button>
+          <button class="lang-option" type="button" data-lang="ru" onclick="setLang('ru')" role="option">
+            <span class="lang-flag"><svg viewBox="0 0 9 6" xmlns="http://www.w3.org/2000/svg"><rect width="9" height="2" fill="#fff"/><rect y="2" width="9" height="2" fill="#0039A6"/><rect y="4" width="9" height="2" fill="#D52B1E"/></svg></span>
+            <span class="lang-option-name">Русский</span>
+            <span class="lang-option-check">✓</span>
+          </button>
+          <button class="lang-option" type="button" data-lang="az" onclick="setLang('az')" role="option">
+            <span class="lang-flag"><svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="100" fill="#0092BC"/><rect y="100" width="600" height="100" fill="#EF3340"/><rect y="200" width="600" height="100" fill="#509E2F"/><circle cx="285" cy="150" r="42" fill="#fff"/><circle cx="297" cy="150" r="36" fill="#EF3340"/><polygon fill="#fff" points="333,150 351,142 343,160 357,166 341,167 343,184 333,172 322,184 324,167 308,166 322,160 314,142"/></svg></span>
+            <span class="lang-option-name">Azərbaycan</span>
+            <span class="lang-option-check">✓</span>
+          </button>
+        </div>
+      </div>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
         <div class="toggle-knob"></div>
       </button>
-      <a href="#contacts" class="nav-cta">Start a Project</a>
+      <a href="#contacts" class="nav-cta" data-i18n="nav.startProject">Start a Project</a>
     </div>
   </div>
 </nav>
@@ -288,30 +332,30 @@ body.cs-locked{overflow:hidden}
     <div class="hero-inner">
       <div class="hero-badge">
         <div class="hero-badge-dot"></div>
-        <span><strong>Available</strong> for new engagements &middot; Q2 2026</span>
+        <span data-i18n-html="hero.badge.html"><strong>Available</strong> for new engagements &middot; Q2 2026</span>
       </div>
-      <h1>We build it first.<br>You decide if you <span class="accent">love it.</span></h1>
-      <p class="hero-sub">KeyBit is a software development partner for teams that value proof over pitches. We deliver working demos in days &mdash; no upfront costs, no long contracts, no blind commitments.</p>
+      <h1 data-i18n-html="hero.title.html">We build it first.<br>You decide if you <span class="accent">love it.</span></h1>
+      <p class="hero-sub" data-i18n="hero.sub">KeyBit is a software development partner for teams that value proof over pitches. We deliver working demos in days &mdash; no upfront costs, no long contracts, no blind commitments.</p>
       <div class="hero-ctas">
-        <a href="#contacts" class="btn-primary">Start a conversation <span class="arrow">&rarr;</span></a>
-        <a href="#zero-risk" class="btn-ghost">How it works</a>
+        <a href="#contacts" class="btn-primary" data-i18n-html="hero.cta.primary.html">Start a conversation <span class="arrow">&rarr;</span></a>
+        <a href="#zero-risk" class="btn-ghost" data-i18n="hero.cta.secondary">How it works</a>
       </div>
       <div class="hero-meta">
         <div class="meta-item">
           <div class="meta-num">50<span class="suffix">+</span></div>
-          <div class="meta-label">Projects delivered since 2020</div>
+          <div class="meta-label" data-i18n="hero.meta.projects">Projects delivered since 2020</div>
         </div>
         <div class="meta-item">
           <div class="meta-num">7<span class="suffix">d</span></div>
-          <div class="meta-label">Average demo turnaround</div>
+          <div class="meta-label" data-i18n="hero.meta.demo">Average demo turnaround</div>
         </div>
         <div class="meta-item">
           <div class="meta-num">3</div>
-          <div class="meta-label">Countries across Europe &amp; Caucasus</div>
+          <div class="meta-label" data-i18n="hero.meta.countries">Countries across Europe &amp; Caucasus</div>
         </div>
         <div class="meta-item">
           <div class="meta-num">$0</div>
-          <div class="meta-label">Upfront commitment required</div>
+          <div class="meta-label" data-i18n="hero.meta.upfront">Upfront commitment required</div>
         </div>
       </div>
     </div>
@@ -322,27 +366,27 @@ body.cs-locked{overflow:hidden}
   <div class="container">
     <div class="about-grid">
       <div class="about-left fade-in">
-        <div class="eyebrow">01 &mdash; About</div>
-        <h2>A software partner built on <em>proof</em>, not promises.</h2>
+        <div class="eyebrow" data-i18n="about.eyebrow">01 &mdash; About</div>
+        <h2 data-i18n-html="about.title.html">A software partner built on <em>proof</em>, not promises.</h2>
         <div class="about-text" style="margin-top:1.5rem;">
-          <p>KeyBit is a software development firm founded on a straightforward principle: <strong>clients should see what they're paying for before they pay for it.</strong> We design, build, and deliver &mdash; then let the work speak for itself.</p>
-          <p>Our teams combine senior engineers, designers, and product thinkers distributed across Azerbaijan, Georgia, and Poland &mdash; giving you access to top-tier talent with competitive rates and flexible time-zone coverage.</p>
-          <p>From MVP launches to enterprise-grade platforms, we cover the full product lifecycle with the same uncompromising attention to quality at every stage.</p>
+          <p data-i18n-html="about.p1.html">KeyBit is a software development firm founded on a straightforward principle: <strong>clients should see what they're paying for before they pay for it.</strong> We design, build, and deliver &mdash; then let the work speak for itself.</p>
+          <p data-i18n="about.p2">Our teams combine senior engineers, designers, and product thinkers distributed across Azerbaijan, Georgia, and Poland &mdash; giving you access to top-tier talent with competitive rates and flexible time-zone coverage.</p>
+          <p data-i18n="about.p3">From MVP launches to enterprise-grade platforms, we cover the full product lifecycle with the same uncompromising attention to quality at every stage.</p>
         </div>
-        <div class="about-quote">Show, don't sell. Deliver, don't delay.</div>
+        <div class="about-quote" data-i18n="about.quote">Show, don't sell. Deliver, don't delay.</div>
       </div>
       <div class="about-right fade-in">
         <div class="about-card">
           <div class="about-card-header">
-            <span class="about-card-title">key_principles.md</span>
+            <span class="about-card-title" data-i18n="about.card.title">key_principles.md</span>
             <div class="about-card-dots"><span></span><span></span><span></span></div>
           </div>
           <div class="about-list">
-            <div class="about-item"><span class="about-item-num">01</span><div><div class="about-item-text">Demo before invoice</div><span class="about-item-sub">Working prototype within days, not weeks</span></div></div>
-            <div class="about-item"><span class="about-item-num">02</span><div><div class="about-item-text">Senior-first staffing</div><span class="about-item-sub">No juniors on critical paths &mdash; ever</span></div></div>
-            <div class="about-item"><span class="about-item-num">03</span><div><div class="about-item-text">Full lifecycle coverage</div><span class="about-item-sub">Discovery &rarr; design &rarr; build &rarr; launch &rarr; scale</span></div></div>
-            <div class="about-item"><span class="about-item-num">04</span><div><div class="about-item-text">Distributed team model</div><span class="about-item-sub">Three countries, one standard of quality</span></div></div>
-            <div class="about-item"><span class="about-item-num">05</span><div><div class="about-item-text">Zero lock-in engagements</div><span class="about-item-sub">Transparent terms, flexible commitments</span></div></div>
+            <div class="about-item"><span class="about-item-num">01</span><div><div class="about-item-text" data-i18n="about.item1.title">Demo before invoice</div><span class="about-item-sub" data-i18n="about.item1.sub">Working prototype within days, not weeks</span></div></div>
+            <div class="about-item"><span class="about-item-num">02</span><div><div class="about-item-text" data-i18n="about.item2.title">Senior-first staffing</div><span class="about-item-sub" data-i18n="about.item2.sub">No juniors on critical paths &mdash; ever</span></div></div>
+            <div class="about-item"><span class="about-item-num">03</span><div><div class="about-item-text" data-i18n="about.item3.title">Full lifecycle coverage</div><span class="about-item-sub" data-i18n-html="about.item3.sub.html">Discovery &rarr; design &rarr; build &rarr; launch &rarr; scale</span></div></div>
+            <div class="about-item"><span class="about-item-num">04</span><div><div class="about-item-text" data-i18n="about.item4.title">Distributed team model</div><span class="about-item-sub" data-i18n="about.item4.sub">Three countries, one standard of quality</span></div></div>
+            <div class="about-item"><span class="about-item-num">05</span><div><div class="about-item-text" data-i18n="about.item5.title">Zero lock-in engagements</div><span class="about-item-sub" data-i18n="about.item5.sub">Transparent terms, flexible commitments</span></div></div>
           </div>
         </div>
       </div>
@@ -353,9 +397,9 @@ body.cs-locked{overflow:hidden}
 <section id="services">
   <div class="container">
     <div class="section-header fade-in">
-      <div class="eyebrow">02 &mdash; Services</div>
-      <h2>Everything you need to <em>ship great software.</em></h2>
-      <p class="section-desc" style="margin-top:1rem;">From dedicated product teams to surgical code audits &mdash; each engagement is structured around what your business actually needs.</p>
+      <div class="eyebrow" data-i18n="services.eyebrow">02 &mdash; Services</div>
+      <h2 data-i18n-html="services.title.html">Everything you need to <em>ship great software.</em></h2>
+      <p class="section-desc" style="margin-top:1rem;" data-i18n="services.desc">From dedicated product teams to surgical code audits &mdash; each engagement is structured around what your business actually needs.</p>
     </div>
     <div class="services-grid fade-in">
       <div class="service-card">
@@ -363,26 +407,26 @@ body.cs-locked{overflow:hidden}
           <div class="svc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg></div>
           <span class="svc-num">/01</span>
         </div>
-        <div class="svc-title">Outsource Development</div>
-        <div class="svc-desc">We take full ownership of your product &mdash; from architecture and design through deployment and scaling. You get a working product; we handle the complexity.</div>
-        <div class="svc-tags"><span class="svc-tag">Full-cycle</span><span class="svc-tag">Product</span><span class="svc-tag">End-to-end</span></div>
+        <div class="svc-title" data-i18n="svc1.title">Outsource Development</div>
+        <div class="svc-desc" data-i18n="svc1.desc">We take full ownership of your product &mdash; from architecture and design through deployment and scaling. You get a working product; we handle the complexity.</div>
+        <div class="svc-tags"><span class="svc-tag" data-i18n="svc1.tag1">Full-cycle</span><span class="svc-tag" data-i18n="svc1.tag2">Product</span><span class="svc-tag" data-i18n="svc1.tag3">End-to-end</span></div>
       </div>
       <div class="service-card">
         <div class="svc-head">
           <div class="svc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="17" cy="10" r="3"/><path d="M21 21v-1a3 3 0 0 0-3-3h-2"/></svg></div>
           <span class="svc-num">/02</span>
         </div>
-        <div class="svc-title">Team Augmentation</div>
-        <div class="svc-desc">Need to scale your engineering team fast? We embed senior engineers directly into your workflow, processes, and tooling &mdash; as if they were your own.</div>
-        <div class="svc-tags"><span class="svc-tag">Outstaff</span><span class="svc-tag">Dedicated devs</span><span class="svc-tag">Long-term</span></div>
+        <div class="svc-title" data-i18n="svc2.title">Team Augmentation</div>
+        <div class="svc-desc" data-i18n="svc2.desc">Need to scale your engineering team fast? We embed senior engineers directly into your workflow, processes, and tooling &mdash; as if they were your own.</div>
+        <div class="svc-tags"><span class="svc-tag" data-i18n="svc2.tag1">Outstaff</span><span class="svc-tag" data-i18n="svc2.tag2">Dedicated devs</span><span class="svc-tag" data-i18n="svc2.tag3">Long-term</span></div>
       </div>
       <div class="service-card">
         <div class="svc-head">
           <div class="svc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
           <span class="svc-num">/03</span>
         </div>
-        <div class="svc-title">Mobile Development</div>
-        <div class="svc-desc">Native iOS and Android, or cross-platform with React Native and Flutter. Applications built to perform, scale, and delight users on any device.</div>
+        <div class="svc-title" data-i18n="svc3.title">Mobile Development</div>
+        <div class="svc-desc" data-i18n="svc3.desc">Native iOS and Android, or cross-platform with React Native and Flutter. Applications built to perform, scale, and delight users on any device.</div>
         <div class="svc-tags"><span class="svc-tag">iOS</span><span class="svc-tag">Android</span><span class="svc-tag">React Native</span><span class="svc-tag">Flutter</span></div>
       </div>
       <div class="service-card">
@@ -390,27 +434,27 @@ body.cs-locked{overflow:hidden}
           <div class="svc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></div>
           <span class="svc-num">/04</span>
         </div>
-        <div class="svc-title">Web Development</div>
-        <div class="svc-desc">From SaaS dashboards and marketplaces to enterprise portals &mdash; we build web products that scale gracefully and perform under pressure.</div>
-        <div class="svc-tags"><span class="svc-tag">SaaS</span><span class="svc-tag">Marketplaces</span><span class="svc-tag">Portals</span><span class="svc-tag">PWA</span></div>
+        <div class="svc-title" data-i18n="svc4.title">Web Development</div>
+        <div class="svc-desc" data-i18n="svc4.desc">From SaaS dashboards and marketplaces to enterprise portals &mdash; we build web products that scale gracefully and perform under pressure.</div>
+        <div class="svc-tags"><span class="svc-tag" data-i18n="svc4.tag1">SaaS</span><span class="svc-tag" data-i18n="svc4.tag2">Marketplaces</span><span class="svc-tag" data-i18n="svc4.tag3">Portals</span><span class="svc-tag">PWA</span></div>
       </div>
       <div class="service-card">
         <div class="svc-head">
           <div class="svc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
           <span class="svc-num">/05</span>
         </div>
-        <div class="svc-title">Audit &amp; Refactoring</div>
-        <div class="svc-desc">Legacy codebase slowing you down? We assess architecture, identify bottlenecks, and restructure systems for long-term maintainability and performance.</div>
-        <div class="svc-tags"><span class="svc-tag">Code audit</span><span class="svc-tag">Refactoring</span><span class="svc-tag">Performance</span><span class="svc-tag">Security</span></div>
+        <div class="svc-title" data-i18n="svc5.title">Audit &amp; Refactoring</div>
+        <div class="svc-desc" data-i18n="svc5.desc">Legacy codebase slowing you down? We assess architecture, identify bottlenecks, and restructure systems for long-term maintainability and performance.</div>
+        <div class="svc-tags"><span class="svc-tag" data-i18n="svc5.tag1">Code audit</span><span class="svc-tag" data-i18n="svc5.tag2">Refactoring</span><span class="svc-tag" data-i18n="svc5.tag3">Performance</span><span class="svc-tag" data-i18n="svc5.tag4">Security</span></div>
       </div>
       <div class="service-card">
         <div class="svc-head">
           <div class="svc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
           <span class="svc-num">/06</span>
         </div>
-        <div class="svc-title">MVP &amp; Rapid Prototyping</div>
-        <div class="svc-desc">Validate your idea with a working product in record time. We help startups and corporate innovators go from concept to functional demo in days.</div>
-        <div class="svc-tags"><span class="svc-tag">Startup</span><span class="svc-tag">MVP</span><span class="svc-tag">Prototype</span><span class="svc-tag">Validation</span></div>
+        <div class="svc-title" data-i18n="svc6.title">MVP &amp; Rapid Prototyping</div>
+        <div class="svc-desc" data-i18n="svc6.desc">Validate your idea with a working product in record time. We help startups and corporate innovators go from concept to functional demo in days.</div>
+        <div class="svc-tags"><span class="svc-tag" data-i18n="svc6.tag1">Startup</span><span class="svc-tag">MVP</span><span class="svc-tag" data-i18n="svc6.tag3">Prototype</span><span class="svc-tag" data-i18n="svc6.tag4">Validation</span></div>
       </div>
     </div>
   </div>
@@ -419,36 +463,36 @@ body.cs-locked{overflow:hidden}
 <section id="zero-risk">
   <div class="zr-inner">
     <div class="fade-in">
-      <div class="eyebrow">03 &mdash; Our Differentiator</div>
-      <h2>Demo first. <em>Pay later.</em><br>Zero risk.</h2>
-      <p class="zr-lead">We believe trust is earned through action, not promises. That's why we always start by building and showing &mdash; before any invoice is sent. You evaluate real, working software, not a proposal deck.</p>
+      <div class="eyebrow" data-i18n="zr.eyebrow">03 &mdash; Our Differentiator</div>
+      <h2 data-i18n-html="zr.title.html">Demo first. <em>Pay later.</em><br>Zero risk.</h2>
+      <p class="zr-lead" data-i18n="zr.lead">We believe trust is earned through action, not promises. That's why we always start by building and showing &mdash; before any invoice is sent. You evaluate real, working software, not a proposal deck.</p>
     </div>
     <div class="zr-process fade-in">
       <div class="zr-step">
         <div class="zr-step-circle">01</div>
-        <div class="zr-step-title">We listen</div>
-        <div class="zr-step-desc">A short discovery call to understand your goals, constraints, and technical context.</div>
+        <div class="zr-step-title" data-i18n="zr.step1.title">We listen</div>
+        <div class="zr-step-desc" data-i18n="zr.step1.desc">A short discovery call to understand your goals, constraints, and technical context.</div>
       </div>
       <div class="zr-step">
         <div class="zr-step-circle">02</div>
-        <div class="zr-step-title">We build</div>
-        <div class="zr-step-desc">Our team ships a real, interactive demo in days &mdash; not months, not a PDF, not a mockup.</div>
+        <div class="zr-step-title" data-i18n="zr.step2.title">We build</div>
+        <div class="zr-step-desc" data-i18n="zr.step2.desc">Our team ships a real, interactive demo in days &mdash; not months, not a PDF, not a mockup.</div>
       </div>
       <div class="zr-step">
         <div class="zr-step-circle">03</div>
-        <div class="zr-step-title">You decide</div>
-        <div class="zr-step-desc">Love it? Let's go. Not quite right? We adjust or part ways &mdash; no invoice, no hard feelings.</div>
+        <div class="zr-step-title" data-i18n="zr.step3.title">You decide</div>
+        <div class="zr-step-desc" data-i18n="zr.step3.desc">Love it? Let's go. Not quite right? We adjust or part ways &mdash; no invoice, no hard feelings.</div>
       </div>
     </div>
     <div class="zr-highlight-box fade-in">
-      <div class="zr-quote"><span class="mark">&mdash;</span> See it before you pay for it. That's the entire deal.</div>
+      <div class="zr-quote" data-i18n-html="zr.quote.html"><span class="mark">&mdash;</span> See it before you pay for it. That's the entire deal.</div>
       <ul class="zr-checks">
-        <li><span class="mark">&rarr;</span> No upfront payment required</li>
-        <li><span class="mark">&rarr;</span> Tangible proof of speed &amp; quality</li>
-        <li><span class="mark">&rarr;</span> No risk of hiring the wrong team</li>
-        <li><span class="mark">&rarr;</span> Working code, not a sales pitch</li>
-        <li><span class="mark">&rarr;</span> Transparent pricing after approval</li>
-        <li><span class="mark">&rarr;</span> You stay in control at every step</li>
+        <li data-i18n-html="zr.check1"><span class="mark">&rarr;</span> No upfront payment required</li>
+        <li data-i18n-html="zr.check2"><span class="mark">&rarr;</span> Tangible proof of speed &amp; quality</li>
+        <li data-i18n-html="zr.check3"><span class="mark">&rarr;</span> No risk of hiring the wrong team</li>
+        <li data-i18n-html="zr.check4"><span class="mark">&rarr;</span> Working code, not a sales pitch</li>
+        <li data-i18n-html="zr.check5"><span class="mark">&rarr;</span> Transparent pricing after approval</li>
+        <li data-i18n-html="zr.check6"><span class="mark">&rarr;</span> You stay in control at every step</li>
       </ul>
     </div>
   </div>
@@ -458,43 +502,43 @@ body.cs-locked{overflow:hidden}
   <div class="container">
     <div class="tech-wrapper">
       <div class="tech-sidebar fade-in">
-        <div class="eyebrow">04 &mdash; Technology</div>
-        <h2>Tools we trust.<br><em>Tech we know deeply.</em></h2>
-        <p class="section-desc">We work with modern, battle-tested technologies across every layer of the stack &mdash; chosen for longevity and production readiness, not hype.</p>
+        <div class="eyebrow" data-i18n="tech.eyebrow">04 &mdash; Technology</div>
+        <h2 data-i18n-html="tech.title.html">Tools we trust.<br><em>Tech we know deeply.</em></h2>
+        <p class="section-desc" data-i18n="tech.desc">We work with modern, battle-tested technologies across every layer of the stack &mdash; chosen for longevity and production readiness, not hype.</p>
       </div>
       <div class="tech-categories fade-in">
         <div class="tech-cat">
-          <div class="tech-cat-head"><div class="tech-cat-title">Languages</div><div class="tech-cat-count">11</div></div>
+          <div class="tech-cat-head"><div class="tech-cat-title" data-i18n="tech.cat.languages">Languages</div><div class="tech-cat-count">11</div></div>
           <div class="tech-pills">
             <span class="tech-pill">TypeScript</span><span class="tech-pill">JavaScript</span><span class="tech-pill">Python</span><span class="tech-pill">Go</span><span class="tech-pill">Rust</span><span class="tech-pill">Java</span><span class="tech-pill">Kotlin</span><span class="tech-pill">Swift</span><span class="tech-pill">Dart</span><span class="tech-pill">C#</span><span class="tech-pill">PHP</span>
           </div>
         </div>
         <div class="tech-cat">
-          <div class="tech-cat-head"><div class="tech-cat-title">Frontend &amp; Mobile</div><div class="tech-cat-count">09</div></div>
+          <div class="tech-cat-head"><div class="tech-cat-title" data-i18n="tech.cat.frontend">Frontend &amp; Mobile</div><div class="tech-cat-count">09</div></div>
           <div class="tech-pills">
             <span class="tech-pill">React</span><span class="tech-pill">Next.js</span><span class="tech-pill">Vue</span><span class="tech-pill">Nuxt</span><span class="tech-pill">Angular</span><span class="tech-pill">React Native</span><span class="tech-pill">Flutter</span><span class="tech-pill">Expo</span><span class="tech-pill">Tailwind</span>
           </div>
         </div>
         <div class="tech-cat">
-          <div class="tech-cat-head"><div class="tech-cat-title">Backend &amp; APIs</div><div class="tech-cat-count">11</div></div>
+          <div class="tech-cat-head"><div class="tech-cat-title" data-i18n="tech.cat.backend">Backend &amp; APIs</div><div class="tech-cat-count">11</div></div>
           <div class="tech-pills">
             <span class="tech-pill">Node.js</span><span class="tech-pill">NestJS</span><span class="tech-pill">Express</span><span class="tech-pill">FastAPI</span><span class="tech-pill">Django</span><span class="tech-pill">Spring Boot</span><span class="tech-pill">Laravel</span><span class="tech-pill">.NET Core</span><span class="tech-pill">GraphQL</span><span class="tech-pill">REST</span><span class="tech-pill">gRPC</span>
           </div>
         </div>
         <div class="tech-cat">
-          <div class="tech-cat-head"><div class="tech-cat-title">Databases</div><div class="tech-cat-count">10</div></div>
+          <div class="tech-cat-head"><div class="tech-cat-title" data-i18n="tech.cat.databases">Databases</div><div class="tech-cat-count">10</div></div>
           <div class="tech-pills">
             <span class="tech-pill">PostgreSQL</span><span class="tech-pill">MySQL</span><span class="tech-pill">MongoDB</span><span class="tech-pill">Redis</span><span class="tech-pill">Elasticsearch</span><span class="tech-pill">ClickHouse</span><span class="tech-pill">Cassandra</span><span class="tech-pill">SQLite</span><span class="tech-pill">Firestore</span><span class="tech-pill">Supabase</span>
           </div>
         </div>
         <div class="tech-cat">
-          <div class="tech-cat-head"><div class="tech-cat-title">Message Brokers &amp; Queues</div><div class="tech-cat-count">06</div></div>
+          <div class="tech-cat-head"><div class="tech-cat-title" data-i18n="tech.cat.brokers">Message Brokers &amp; Queues</div><div class="tech-cat-count">06</div></div>
           <div class="tech-pills">
             <span class="tech-pill">Kafka</span><span class="tech-pill">RabbitMQ</span><span class="tech-pill">NATS</span><span class="tech-pill">Redis Pub/Sub</span><span class="tech-pill">AWS SQS</span><span class="tech-pill">BullMQ</span>
           </div>
         </div>
         <div class="tech-cat">
-          <div class="tech-cat-head"><div class="tech-cat-title">Cloud &amp; DevOps</div><div class="tech-cat-count">09</div></div>
+          <div class="tech-cat-head"><div class="tech-cat-title" data-i18n="tech.cat.cloud">Cloud &amp; DevOps</div><div class="tech-cat-count">09</div></div>
           <div class="tech-pills">
             <span class="tech-pill">AWS</span><span class="tech-pill">GCP</span><span class="tech-pill">Azure</span><span class="tech-pill">Docker</span><span class="tech-pill">Kubernetes</span><span class="tech-pill">Terraform</span><span class="tech-pill">GitHub Actions</span><span class="tech-pill">GitLab CI</span><span class="tech-pill">Nginx</span>
           </div>
@@ -507,54 +551,54 @@ body.cs-locked{overflow:hidden}
 <section id="locations">
   <div class="container">
     <div class="section-header fade-in">
-      <div class="eyebrow">05 &mdash; Locations</div>
-      <h2>Local talent. <em>Global standards.</em></h2>
-      <p class="section-desc" style="margin-top:1rem;">We operate from three countries, giving our clients access to diverse talent pools, favorable time zones, and strong engineering cultures.</p>
+      <div class="eyebrow" data-i18n="loc.eyebrow">05 &mdash; Locations</div>
+      <h2 data-i18n-html="loc.title.html">Local talent. <em>Global standards.</em></h2>
+      <p class="section-desc" style="margin-top:1rem;" data-i18n="loc.desc">We operate from three countries, giving our clients access to diverse talent pools, favorable time zones, and strong engineering cultures.</p>
     </div>
     <div class="loc-grid">
       <div class="loc-card fade-in">
         <div class="loc-head">
           <div class="loc-code">AZ</div>
-          <div><div class="loc-country">Azerbaijan</div><div class="loc-city">Baku &middot; HQ</div></div>
+          <div><div class="loc-country" data-i18n="loc.az.country">Azerbaijan</div><div class="loc-city" data-i18n="loc.az.city">Baku &middot; HQ</div></div>
         </div>
-        <div class="loc-desc">Our founding hub. Home to our leadership team, core R&amp;D, and a rapidly growing technology scene with strong engineering talent rooted in STEM education.</div>
+        <div class="loc-desc" data-i18n="loc.az.desc">Our founding hub. Home to our leadership team, core R&amp;D, and a rapidly growing technology scene with strong engineering talent rooted in STEM education.</div>
       </div>
       <div class="loc-card fade-in">
         <div class="loc-head">
           <div class="loc-code">GE</div>
-          <div><div class="loc-country">Georgia</div><div class="loc-city">Tbilisi</div></div>
+          <div><div class="loc-country" data-i18n="loc.ge.country">Georgia</div><div class="loc-city" data-i18n="loc.ge.city">Tbilisi</div></div>
         </div>
-        <div class="loc-desc">A thriving startup ecosystem with highly skilled engineers and a business-friendly environment that has attracted global companies and remote-first teams.</div>
+        <div class="loc-desc" data-i18n="loc.ge.desc">A thriving startup ecosystem with highly skilled engineers and a business-friendly environment that has attracted global companies and remote-first teams.</div>
       </div>
       <div class="loc-card fade-in">
         <div class="loc-head">
           <div class="loc-code">PL</div>
-          <div><div class="loc-country">Poland</div><div class="loc-city">Warsaw &middot; Krak&oacute;w</div></div>
+          <div><div class="loc-country" data-i18n="loc.pl.country">Poland</div><div class="loc-city" data-i18n="loc.pl.city">Warsaw &middot; Krak&oacute;w</div></div>
         </div>
-        <div class="loc-desc">Our European gateway. EU-based operations with world-class engineers and convenient time zones for Western clients &mdash; plus full GDPR compliance.</div>
+        <div class="loc-desc" data-i18n="loc.pl.desc">Our European gateway. EU-based operations with world-class engineers and convenient time zones for Western clients &mdash; plus full GDPR compliance.</div>
       </div>
     </div>
     <div class="multi-geo fade-in">
       <div>
-        <div class="multi-geo-title">Why <em>multi-geography</em> is your advantage</div>
-        <div class="multi-geo-sub">Three offices, three time zones, one coordinated team.</div>
+        <div class="multi-geo-title" data-i18n-html="geo.title.html">Why <em>multi-geography</em> is your advantage</div>
+        <div class="multi-geo-sub" data-i18n="geo.sub">Three offices, three time zones, one coordinated team.</div>
       </div>
       <div class="geo-benefits">
         <div class="geo-benefit">
           <div class="geo-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <div><strong>Time zone coverage</strong><div class="geo-benefit-text">Overlap with Europe, Middle East, and US East Coast &mdash; your messages don't wait overnight.</div></div>
+          <div><strong data-i18n="geo.b1.title">Time zone coverage</strong><div class="geo-benefit-text" data-i18n="geo.b1.desc">Overlap with Europe, Middle East, and US East Coast &mdash; your messages don't wait overnight.</div></div>
         </div>
         <div class="geo-benefit">
           <div class="geo-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <div><strong>Risk distribution</strong><div class="geo-benefit-text">Teams across regions ensure business continuity regardless of local disruptions.</div></div>
+          <div><strong data-i18n="geo.b2.title">Risk distribution</strong><div class="geo-benefit-text" data-i18n="geo.b2.desc">Teams across regions ensure business continuity regardless of local disruptions.</div></div>
         </div>
         <div class="geo-benefit">
           <div class="geo-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-          <div><strong>Talent diversity</strong><div class="geo-benefit-text">Broader, complementary skill pools &mdash; different education systems and problem-solving approaches.</div></div>
+          <div><strong data-i18n="geo.b3.title">Talent diversity</strong><div class="geo-benefit-text" data-i18n="geo.b3.desc">Broader, complementary skill pools &mdash; different education systems and problem-solving approaches.</div></div>
         </div>
         <div class="geo-benefit">
           <div class="geo-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-          <div><strong>Competitive pricing</strong><div class="geo-benefit-text">High-quality engineering without Western European or US price tags. Value without compromise.</div></div>
+          <div><strong data-i18n="geo.b4.title">Competitive pricing</strong><div class="geo-benefit-text" data-i18n="geo.b4.desc">High-quality engineering without Western European or US price tags. Value without compromise.</div></div>
         </div>
       </div>
     </div>
@@ -564,40 +608,40 @@ body.cs-locked{overflow:hidden}
 <section id="why">
   <div class="container">
     <div class="section-header fade-in">
-      <div class="eyebrow">06 &mdash; Why KeyBit</div>
-      <h2>Not just a vendor. <em>A partner.</em></h2>
-      <p class="section-desc" style="margin-top:1rem;">The operational principles that make working with us different &mdash; and what clients consistently tell us matters most.</p>
+      <div class="eyebrow" data-i18n="why.eyebrow">06 &mdash; Why KeyBit</div>
+      <h2 data-i18n-html="why.title.html">Not just a vendor. <em>A partner.</em></h2>
+      <p class="section-desc" style="margin-top:1rem;" data-i18n="why.desc">The operational principles that make working with us different &mdash; and what clients consistently tell us matters most.</p>
     </div>
     <div class="why-grid">
       <div class="why-card fade-in">
         <div class="why-num">/ 01</div>
-        <div class="why-title">Outcome-focused</div>
-        <div class="why-desc">We measure success by your business results &mdash; not hours logged or tickets closed. Our incentives are aligned with your outcomes from day one.</div>
+        <div class="why-title" data-i18n="why1.title">Outcome-focused</div>
+        <div class="why-desc" data-i18n="why1.desc">We measure success by your business results &mdash; not hours logged or tickets closed. Our incentives are aligned with your outcomes from day one.</div>
       </div>
       <div class="why-card fade-in">
         <div class="why-num">/ 02</div>
-        <div class="why-title">IP protection</div>
-        <div class="why-desc">Full NDA and IP assignment from the moment we sign. All code, designs, and assets produced belong entirely to you &mdash; no caveats.</div>
+        <div class="why-title" data-i18n="why2.title">IP protection</div>
+        <div class="why-desc" data-i18n="why2.desc">Full NDA and IP assignment from the moment we sign. All code, designs, and assets produced belong entirely to you &mdash; no caveats.</div>
       </div>
       <div class="why-card fade-in">
         <div class="why-num">/ 03</div>
-        <div class="why-title">Radical transparency</div>
-        <div class="why-desc">Weekly demos, daily standups when appropriate, and honest updates &mdash; especially when things are hard. You'll never be surprised by a deadline.</div>
+        <div class="why-title" data-i18n="why3.title">Radical transparency</div>
+        <div class="why-desc" data-i18n="why3.desc">Weekly demos, daily standups when appropriate, and honest updates &mdash; especially when things are hard. You'll never be surprised by a deadline.</div>
       </div>
       <div class="why-card fade-in">
         <div class="why-num">/ 04</div>
-        <div class="why-title">Flexible engagement</div>
-        <div class="why-desc">Fixed price, time &amp; materials, or dedicated team &mdash; we adapt to your budget model rather than forcing ours on you.</div>
+        <div class="why-title" data-i18n="why4.title">Flexible engagement</div>
+        <div class="why-desc" data-i18n="why4.desc">Fixed price, time &amp; materials, or dedicated team &mdash; we adapt to your budget model rather than forcing ours on you.</div>
       </div>
       <div class="why-card fade-in">
         <div class="why-num">/ 05</div>
-        <div class="why-title">Senior-first teams</div>
-        <div class="why-desc">No bait-and-switch. The engineers you meet during scoping are the ones writing your code. Predominantly senior and mid-level talent.</div>
+        <div class="why-title" data-i18n="why5.title">Senior-first teams</div>
+        <div class="why-desc" data-i18n="why5.desc">No bait-and-switch. The engineers you meet during scoping are the ones writing your code. Predominantly senior and mid-level talent.</div>
       </div>
       <div class="why-card fade-in">
         <div class="why-num">/ 06</div>
-        <div class="why-title">Long-term mindset</div>
-        <div class="why-desc">We write code as if we'll maintain it forever. Clean architecture, documentation, and test coverage are non-negotiable, not extras.</div>
+        <div class="why-title" data-i18n="why6.title">Long-term mindset</div>
+        <div class="why-desc" data-i18n="why6.desc">We write code as if we'll maintain it forever. Clean architecture, documentation, and test coverage are non-negotiable, not extras.</div>
       </div>
     </div>
   </div>
@@ -607,40 +651,40 @@ body.cs-locked{overflow:hidden}
   <div class="container">
     <div class="proc-wrapper">
       <div class="proc-sidebar fade-in">
-        <div class="eyebrow">07 &mdash; How we work</div>
-        <h2>From first call to <em>shipped product.</em></h2>
-        <p class="section-desc" style="margin-top:1rem;">A predictable, transparent process designed to minimize risk and maximize momentum at every stage.</p>
+        <div class="eyebrow" data-i18n="proc.eyebrow">07 &mdash; How we work</div>
+        <h2 data-i18n-html="proc.title.html">From first call to <em>shipped product.</em></h2>
+        <p class="section-desc" style="margin-top:1rem;" data-i18n="proc.desc">A predictable, transparent process designed to minimize risk and maximize momentum at every stage.</p>
       </div>
       <div class="proc-timeline fade-in">
         <div class="proc-step">
-          <div class="proc-step-num">STEP 01</div>
-          <div class="proc-step-title">Discovery call</div>
-          <div class="proc-step-desc">A 30-minute conversation to understand your product, team, and goals. We ask the right questions &mdash; and share what we'd need to move forward.</div>
+          <div class="proc-step-num" data-i18n-step="01">STEP 01</div>
+          <div class="proc-step-title" data-i18n="proc1.title">Discovery call</div>
+          <div class="proc-step-desc" data-i18n="proc1.desc">A 30-minute conversation to understand your product, team, and goals. We ask the right questions &mdash; and share what we'd need to move forward.</div>
         </div>
         <div class="proc-step">
-          <div class="proc-step-num">STEP 02</div>
-          <div class="proc-step-title">Scoping &amp; proposal</div>
-          <div class="proc-step-desc">We outline scope, recommended stack, rough timeline, and team composition. No fluff &mdash; just clarity on what we'd build and how.</div>
+          <div class="proc-step-num" data-i18n-step="02">STEP 02</div>
+          <div class="proc-step-title" data-i18n="proc2.title">Scoping &amp; proposal</div>
+          <div class="proc-step-desc" data-i18n="proc2.desc">We outline scope, recommended stack, rough timeline, and team composition. No fluff &mdash; just clarity on what we'd build and how.</div>
         </div>
         <div class="proc-step">
-          <div class="proc-step-num">STEP 03</div>
-          <div class="proc-step-title">Demo sprint</div>
-          <div class="proc-step-desc">Our team dives in and ships a working demo or proof-of-concept within days. Real code, real interactions, real evidence.</div>
+          <div class="proc-step-num" data-i18n-step="03">STEP 03</div>
+          <div class="proc-step-title" data-i18n="proc3.title">Demo sprint</div>
+          <div class="proc-step-desc" data-i18n="proc3.desc">Our team dives in and ships a working demo or proof-of-concept within days. Real code, real interactions, real evidence.</div>
         </div>
         <div class="proc-step">
-          <div class="proc-step-num">STEP 04</div>
-          <div class="proc-step-title">Your approval</div>
-          <div class="proc-step-desc">You review the demo, share feedback, and decide whether to proceed. No pressure, no obligation &mdash; the ball stays in your court.</div>
+          <div class="proc-step-num" data-i18n-step="04">STEP 04</div>
+          <div class="proc-step-title" data-i18n="proc4.title">Your approval</div>
+          <div class="proc-step-desc" data-i18n="proc4.desc">You review the demo, share feedback, and decide whether to proceed. No pressure, no obligation &mdash; the ball stays in your court.</div>
         </div>
         <div class="proc-step">
-          <div class="proc-step-num">STEP 05</div>
-          <div class="proc-step-title">Full development</div>
-          <div class="proc-step-desc">We build the complete product with regular demos, sprint updates, and transparent progress tracking throughout the engagement.</div>
+          <div class="proc-step-num" data-i18n-step="05">STEP 05</div>
+          <div class="proc-step-title" data-i18n="proc5.title">Full development</div>
+          <div class="proc-step-desc" data-i18n="proc5.desc">We build the complete product with regular demos, sprint updates, and transparent progress tracking throughout the engagement.</div>
         </div>
         <div class="proc-step">
-          <div class="proc-step-num">STEP 06</div>
-          <div class="proc-step-title">Launch &amp; support</div>
-          <div class="proc-step-desc">Deployment, knowledge transfer, and ongoing support as you scale. We stay involved for as long as you need us.</div>
+          <div class="proc-step-num" data-i18n-step="06">STEP 06</div>
+          <div class="proc-step-title" data-i18n="proc6.title">Launch &amp; support</div>
+          <div class="proc-step-desc" data-i18n="proc6.desc">Deployment, knowledge transfer, and ongoing support as you scale. We stay involved for as long as you need us.</div>
         </div>
       </div>
     </div>
@@ -651,48 +695,48 @@ body.cs-locked{overflow:hidden}
   <div class="container">
     <div class="contact-wrapper">
       <div class="contact-left fade-in">
-        <div class="eyebrow">08 &mdash; Get in touch</div>
-        <h2>Let's build something <em>together.</em></h2>
-        <p>Tell us about your project and we'll get back to you within 24 hours. No commitment, no sales pressure &mdash; just a conversation about what's possible.</p>
+        <div class="eyebrow" data-i18n="contact.eyebrow">08 &mdash; Get in touch</div>
+        <h2 data-i18n-html="contact.title.html">Let's build something <em>together.</em></h2>
+        <p data-i18n="contact.desc">Tell us about your project and we'll get back to you within 24 hours. No commitment, no sales pressure &mdash; just a conversation about what's possible.</p>
         <div class="contact-links">
           <a href="mailto:hello@keybit.dev" class="contact-link">
             <div class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-            <div><div class="contact-link-label">Email</div><div class="contact-link-value">hello@keybit.dev</div></div>
+            <div><div class="contact-link-label" data-i18n="contact.email.label">Email</div><div class="contact-link-value">hello@keybit.dev</div></div>
             <span class="arrow">&rarr;</span>
           </a>
           <a href="https://t.me/keybit" class="contact-link">
             <div class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4 20-7Z"/><path d="M22 2 11 13"/></svg></div>
-            <div><div class="contact-link-label">Telegram</div><div class="contact-link-value">@keybit</div></div>
+            <div><div class="contact-link-label" data-i18n="contact.tg.label">Telegram</div><div class="contact-link-value">@keybit</div></div>
             <span class="arrow">&rarr;</span>
           </a>
           <a href="https://linkedin.com/company/keybit" class="contact-link">
             <div class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
-            <div><div class="contact-link-label">LinkedIn</div><div class="contact-link-value">linkedin.com/company/keybit</div></div>
+            <div><div class="contact-link-label" data-i18n="contact.li.label">LinkedIn</div><div class="contact-link-value">linkedin.com/company/keybit</div></div>
             <span class="arrow">&rarr;</span>
           </a>
         </div>
       </div>
       <form class="contact-form fade-in" onsubmit="return false;">
-        <div class="contact-form-title">Send a brief</div>
+        <div class="contact-form-title" data-i18n="contact.form.title">Send a brief</div>
         <div class="form-row">
-          <div class="form-field"><label>Name</label><input type="text" placeholder="Alex Johnson"/></div>
-          <div class="form-field"><label>Company</label><input type="text" placeholder="Acme Inc."/></div>
+          <div class="form-field"><label data-i18n="contact.form.name">Name</label><input type="text" data-i18n-placeholder="contact.form.namePh" placeholder="Alex Johnson"/></div>
+          <div class="form-field"><label data-i18n="contact.form.company">Company</label><input type="text" data-i18n-placeholder="contact.form.companyPh" placeholder="Acme Inc."/></div>
         </div>
-        <div class="form-field"><label>Email</label><input type="email" placeholder="alex@company.com"/></div>
+        <div class="form-field"><label data-i18n="contact.form.email">Email</label><input type="email" data-i18n-placeholder="contact.form.emailPh" placeholder="alex@company.com"/></div>
         <div class="form-field">
-          <label>Service</label>
+          <label data-i18n="contact.form.service">Service</label>
           <select>
-            <option>Outsource Development</option>
-            <option>Team Augmentation</option>
-            <option>Mobile Application</option>
-            <option>Web Application</option>
-            <option>Technical Audit &amp; Refactoring</option>
-            <option>MVP / Prototype</option>
-            <option>Other &mdash; let's discuss</option>
+            <option data-i18n="contact.form.svc1">Outsource Development</option>
+            <option data-i18n="contact.form.svc2">Team Augmentation</option>
+            <option data-i18n="contact.form.svc3">Mobile Application</option>
+            <option data-i18n="contact.form.svc4">Web Application</option>
+            <option data-i18n="contact.form.svc5">Technical Audit &amp; Refactoring</option>
+            <option data-i18n="contact.form.svc6">MVP / Prototype</option>
+            <option data-i18n="contact.form.svc7">Other &mdash; let's discuss</option>
           </select>
         </div>
-        <div class="form-field"><label>Project details</label><textarea placeholder="Briefly describe your idea, goals, or the problem you're trying to solve..."></textarea></div>
-        <button class="form-submit">Send message <span>&rarr;</span></button>
+        <div class="form-field"><label data-i18n="contact.form.details">Project details</label><textarea data-i18n-placeholder="contact.form.detailsPh" placeholder="Briefly describe your idea, goals, or the problem you're trying to solve..."></textarea></div>
+        <button class="form-submit" data-i18n-html="contact.form.submit.html">Send message <span>&rarr;</span></button>
       </form>
     </div>
   </div>
@@ -702,13 +746,14 @@ body.cs-locked{overflow:hidden}
   <div class="footer-inner">
     <a href="#hero" class="logo"><span class="logo-mark"><svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><path class="lm-bracket" d="M 4 3 L 4 27"/><path class="lm-bracket" d="M 4 3 L 9 3"/><path class="lm-bracket" d="M 4 27 L 9 27"/><line class="lm-slash" x1="18" y1="9" x2="11" y2="20"/><circle class="lm-dot" cx="19" cy="20" r="2.6"/></svg></span><span class="logo-text"><span class="lt-key">Key</span><span class="lt-bit">bit</span></span></a>
     <div class="footer-meta">
-      <span>&copy; 2026 KeyBit</span>
-      <span>Baku &middot; Tbilisi &middot; Warsaw</span>
-      <span>Demo first. Always.</span>
+      <span data-i18n="footer.copy">&copy; 2026 KeyBit</span>
+      <span data-i18n="footer.cities">Baku &middot; Tbilisi &middot; Warsaw</span>
+      <span data-i18n="footer.tagline">Demo first. Always.</span>
     </div>
   </div>
 </footer>
 
+<script src="translations.js"></script>
 <script>
 (function loadComingSoon(){
   const mount=document.getElementById('coming-soon-mount');
@@ -717,11 +762,86 @@ body.cs-locked{overflow:hidden}
   if(!src)return;
   fetch(src).then(r=>r.ok?r.text():Promise.reject()).then(html=>{
     mount.outerHTML=html;
+    applyLang(currentLang);
   }).catch(()=>{
     document.body.classList.remove('cs-locked');
     mount.remove();
   });
 })();
+
+let currentLang='en';
+const STEP_LABELS={en:'STEP',ru:'ШАГ',az:'ADDIM'};
+const LANG_CODES={en:'EN',ru:'RU',az:'AZ'};
+
+function applyLang(lang){
+  const dict=(window.KEYBIT_TRANSLATIONS||{})[lang];
+  if(!dict)return;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(dict[key]!==undefined)el.textContent=dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-html');
+    if(dict[key]!==undefined)el.innerHTML=dict[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-placeholder');
+    if(dict[key]!==undefined)el.setAttribute('placeholder',dict[key]);
+  });
+  document.querySelectorAll('[data-i18n-step]').forEach(el=>{
+    const num=el.getAttribute('data-i18n-step');
+    el.textContent=(STEP_LABELS[lang]||'STEP')+' '+num;
+  });
+  document.documentElement.setAttribute('lang',lang);
+  document.querySelectorAll('.lang-option').forEach(b=>{
+    b.classList.toggle('active',b.getAttribute('data-lang')===lang);
+  });
+  // sync trigger flag + code from active option
+  const activeOpt=document.querySelector('.lang-option.active');
+  const triggerFlag=document.getElementById('lang-trigger-flag');
+  const triggerCode=document.getElementById('lang-trigger-code');
+  if(activeOpt&&triggerFlag){
+    const flag=activeOpt.querySelector('.lang-flag');
+    if(flag)triggerFlag.innerHTML=flag.innerHTML;
+  }
+  if(triggerCode)triggerCode.textContent=LANG_CODES[lang]||'EN';
+}
+
+function setLang(lang){
+  currentLang=lang;
+  try{localStorage.setItem('keybit-lang',lang);}catch(e){}
+  applyLang(lang);
+  closeLangMenu();
+}
+
+function toggleLangMenu(e){
+  e.stopPropagation();
+  const dd=document.getElementById('lang-dropdown');
+  if(!dd)return;
+  const open=dd.classList.toggle('open');
+  dd.querySelector('.lang-trigger').setAttribute('aria-expanded',open);
+}
+function closeLangMenu(){
+  const dd=document.getElementById('lang-dropdown');
+  if(!dd)return;
+  dd.classList.remove('open');
+  const t=dd.querySelector('.lang-trigger');
+  if(t)t.setAttribute('aria-expanded','false');
+}
+document.addEventListener('click',(e)=>{
+  const dd=document.getElementById('lang-dropdown');
+  if(dd&&!dd.contains(e.target))closeLangMenu();
+});
+document.addEventListener('keydown',(e)=>{
+  if(e.key==='Escape')closeLangMenu();
+});
+
+try{
+  const saved=localStorage.getItem('keybit-lang');
+  if(saved&&['en','ru','az'].includes(saved))currentLang=saved;
+}catch(e){}
+applyLang(currentLang);
+
 function toggleTheme(){
   const html=document.documentElement;
   const isDark=html.getAttribute('data-theme')==='dark';
