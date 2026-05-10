@@ -4,8 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>KeyBit — Software Development Partner</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23faf6ee'/%3E%3Cpath d='M 6 5 L 6 27' stroke='%231c1f1a' stroke-width='2.6' stroke-linecap='square' fill='none'/%3E%3Cpath d='M 6 5 L 11 5' stroke='%231c1f1a' stroke-width='2.6' stroke-linecap='square' fill='none'/%3E%3Cpath d='M 6 27 L 11 27' stroke='%231c1f1a' stroke-width='2.6' stroke-linecap='square' fill='none'/%3E%3Cline x1='21' y1='10' x2='13' y2='22' stroke='%235f8954' stroke-width='2.6' stroke-linecap='square'/%3E%3Ccircle cx='22' cy='22' r='3' fill='%237aa66c'/%3E%3C/svg%3E"/>
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23faf6ee'/%3E%3Cpath d='M 6 5 L 6 27' stroke='%231c1f1a' stroke-width='2.6' stroke-linecap='square' fill='none'/%3E%3Cpath d='M 6 5 L 11 5' stroke='%231c1f1a' stroke-width='2.6' stroke-linecap='square' fill='none'/%3E%3Cpath d='M 6 27 L 11 27' stroke='%231c1f1a' stroke-width='2.6' stroke-linecap='square' fill='none'/%3E%3Cline x1='21' y1='10' x2='13' y2='22' stroke='%235f8954' stroke-width='2.6' stroke-linecap='square'/%3E%3Ccircle cx='22' cy='22' r='3' fill='%237aa66c'/%3E%3C/svg%3E"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231c1f1a'/%3E%3Cpolyline points='11,10 18,16 11,22' fill='none' stroke='%23faf6ee' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='22.5' cy='22' r='2' fill='%237aa66c'/%3E%3C/svg%3E"/>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231c1f1a'/%3E%3Cpolyline points='11,10 18,16 11,22' fill='none' stroke='%23faf6ee' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='22.5' cy='22' r='2' fill='%237aa66c'/%3E%3C/svg%3E"/>
 <meta name="theme-color" content="#7aa66c"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -21,17 +21,15 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 [data-theme="dark"] body::before{mix-blend-mode:screen;opacity:0.03}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid var(--border);height:72px;transition:all 0.4s}
 .nav-inner{max-width:1280px;margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between;gap:2rem}
-.logo{font-family:'Fraunces',serif;font-weight:500;font-size:1.3rem;color:var(--text);letter-spacing:-0.02em;text-decoration:none;display:flex;align-items:center;gap:11px;transition:opacity 0.2s}
-.logo:hover{opacity:0.75}
-.logo:hover .lm-dot{transform:translate(2px,2px)}
-.logo-mark{width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-mark svg{width:100%;height:100%;overflow:visible}
-.logo-mark .lm-bracket{stroke:var(--text);stroke-width:2.2;fill:none;stroke-linecap:square;stroke-linejoin:miter}
-.logo-mark .lm-slash{stroke:var(--accent2);stroke-width:2.2;stroke-linecap:square}
+.logo{font-family:'Inter',sans-serif;font-weight:700;font-size:1.35rem;color:var(--text);letter-spacing:-0.04em;text-decoration:none;display:flex;align-items:center;gap:10px;transition:opacity 0.2s}
+.logo:hover{opacity:0.78}
+.logo:hover .lm-dot{transform:translate(1px,0)}
+.logo-mark{width:32px;height:32px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center}
+.logo-mark svg{width:100%;height:100%;display:block}
+.logo-mark .lm-badge{fill:var(--text)}
+.logo-mark .lm-chevron{stroke:var(--bg);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .logo-mark .lm-dot{fill:var(--accent);transition:transform 0.3s cubic-bezier(.4,0,.2,1)}
-.logo-text{display:inline-flex;align-items:baseline}
-.logo-text .lt-key{font-weight:500;letter-spacing:-0.02em}
-.logo-text .lt-bit{font-style:italic;font-weight:400;color:var(--accent2);letter-spacing:-0.01em;margin-left:0.5px}
+.logo-text{display:inline-block;line-height:1}
 .nav-links{display:flex;gap:0.3rem;list-style:none;align-items:center}
 .nav-links a{font-size:0.82rem;font-weight:500;color:var(--text2);text-decoration:none;letter-spacing:0.01em;transition:color 0.2s,background 0.2s;padding:8px 14px;border-radius:6px}
 .nav-links a:hover{color:var(--text);background:var(--accent-soft)}
@@ -64,7 +62,7 @@ h1 .accent{color:var(--accent2);font-style:italic;font-weight:400}
 .btn-primary:hover .arrow{transform:translateX(3px)}
 .btn-ghost{background:transparent;color:var(--text);padding:14px 22px;border-radius:8px;font-weight:500;font-size:0.93rem;text-decoration:none;border:1px solid var(--border-strong);transition:all 0.2s;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-family:inherit}
 .btn-ghost:hover{border-color:var(--text);background:var(--surface)}
-.hero-meta{margin-top:5rem;padding-top:2.5rem;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:900px}
+.hero-meta{margin-top:5rem;padding-top:2.5rem;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:720px}
 .meta-num{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:500;color:var(--text);line-height:1;letter-spacing:-0.02em;margin-bottom:6px}
 .meta-num .suffix{font-size:1.3rem;color:var(--accent2);font-style:italic}
 .meta-label{font-size:0.78rem;color:var(--text3);font-weight:400;line-height:1.4}
@@ -123,6 +121,9 @@ h2 em{font-style:italic;color:var(--accent2);font-weight:400}
 #zero-risk h2 em{color:var(--accent)}
 .zr-lead{font-size:1.1rem;color:rgba(255,255,255,0.72);max-width:640px;line-height:1.65;margin-bottom:5rem}
 [data-theme="dark"] .zr-lead{color:var(--text2)}
+[data-theme="dark"] #zero-risk h2{color:var(--text)}
+[data-theme="dark"] .zr-step-title{color:var(--text)}
+[data-theme="dark"] .zr-quote{color:var(--text)}
 .zr-process{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;position:relative;margin-bottom:4rem}
 .zr-process::before{content:'';position:absolute;top:30px;left:15%;right:15%;height:1px;background:repeating-linear-gradient(90deg,rgba(122,166,108,0.4) 0 6px,transparent 6px 14px);z-index:0}
 .zr-step{position:relative;z-index:1;text-align:left}
@@ -150,9 +151,11 @@ h2 em{font-style:italic;color:var(--accent2);font-weight:400}
 .tech-cat-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:500;color:var(--text);letter-spacing:-0.01em}
 .tech-cat-count{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--text3)}
 .tech-pills{display:flex;flex-wrap:wrap;gap:6px}
-.tech-pill{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:6px 13px;border-radius:7px;font-size:0.82rem;font-weight:500;transition:all 0.2s;cursor:default;font-family:'JetBrains Mono',monospace}
+.tech-pill{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:6px 11px 6px 9px;border-radius:7px;font-size:0.82rem;font-weight:500;transition:all 0.2s;cursor:default;font-family:'JetBrains Mono',monospace;display:inline-flex;align-items:center;gap:7px}
 .tech-pill:hover{background:var(--accent-soft);border-color:var(--border-accent);color:var(--accent3);transform:translateY(-1px)}
 [data-theme="dark"] .tech-pill:hover{color:var(--accent2)}
+.tech-pill .tp-ico{width:14px;height:14px;background-color:currentColor;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;flex-shrink:0;opacity:0.8;transition:opacity 0.2s}
+.tech-pill:hover .tp-ico{opacity:1}
 #locations{background:var(--bg2)}
 .loc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem}
 .loc-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;transition:all 0.3s;position:relative;overflow:hidden}
@@ -232,8 +235,8 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2.5rem 0 
 @keyframes csFade{from{opacity:0}to{opacity:1}}
 @keyframes csUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .cs-card{background:var(--card);border:1px solid var(--border-strong);border-radius:18px;padding:3.5rem 3rem;max-width:480px;width:100%;text-align:center;box-shadow:var(--shadow-lg);position:relative;animation:csUp 0.7s cubic-bezier(.3,.7,.4,1) 0.1s both}
-.cs-logo{display:inline-flex;align-items:center;gap:11px;margin-bottom:2.2rem;font-family:'Fraunces',serif;font-weight:500;font-size:1.4rem;color:var(--text);letter-spacing:-0.02em}
-.cs-logo .logo-mark{width:32px;height:32px}
+.cs-logo{display:inline-flex;align-items:center;gap:11px;margin-bottom:2.2rem;font-family:'Inter',sans-serif;font-weight:700;font-size:1.5rem;color:var(--text);letter-spacing:-0.04em}
+.cs-logo .logo-mark{width:36px;height:36px}
 .cs-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--accent2);font-weight:500;margin-bottom:1.4rem;display:inline-flex;align-items:center;gap:10px;justify-content:center}
 .cs-eyebrow .cs-pulse{width:8px;height:8px;border-radius:50%;background:var(--accent);position:relative;display:inline-block}
 .cs-eyebrow .cs-pulse::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);animation:csPulse 2s ease-out infinite}
@@ -274,15 +277,13 @@ body.cs-locked{overflow:hidden}
   <div class="nav-inner">
     <a href="#hero" class="logo">
       <span class="logo-mark">
-        <svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
-          <path class="lm-bracket" d="M 4 3 L 4 27"/>
-          <path class="lm-bracket" d="M 4 3 L 9 3"/>
-          <path class="lm-bracket" d="M 4 27 L 9 27"/>
-          <line class="lm-slash" x1="18" y1="9" x2="11" y2="20"/>
-          <circle class="lm-dot" cx="19" cy="20" r="2.6"/>
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect class="lm-badge" width="32" height="32" rx="7"/>
+          <polyline class="lm-chevron" points="11,10 18,16 11,22"/>
+          <circle class="lm-dot" cx="22.5" cy="22" r="2"/>
         </svg>
       </span>
-      <span class="logo-text"><span class="lt-key">Key</span><span class="lt-bit">bit</span></span>
+      <span class="logo-text">keybit</span>
     </a>
     <ul class="nav-links">
       <li><a href="#about" data-i18n="nav.about">About</a></li>
@@ -344,10 +345,6 @@ body.cs-locked{overflow:hidden}
         <a href="#zero-risk" class="btn-ghost" data-i18n="hero.cta.secondary">How it works</a>
       </div>
       <div class="hero-meta">
-        <div class="meta-item">
-          <div class="meta-num">50<span class="suffix">+</span></div>
-          <div class="meta-label" data-i18n="hero.meta.projects">Projects delivered since 2020</div>
-        </div>
         <div class="meta-item">
           <div class="meta-num">7<span class="suffix">d</span></div>
           <div class="meta-label" data-i18n="hero.meta.demo">Average demo turnaround</div>
@@ -513,37 +510,37 @@ body.cs-locked{overflow:hidden}
         <div class="tech-cat">
           <div class="tech-cat-head"><div class="tech-cat-title" data-i18n="tech.cat.languages">Languages</div><div class="tech-cat-count">11</div></div>
           <div class="tech-pills">
-            <span class="tech-pill">TypeScript</span><span class="tech-pill">JavaScript</span><span class="tech-pill">Python</span><span class="tech-pill">Go</span><span class="tech-pill">Rust</span><span class="tech-pill">Java</span><span class="tech-pill">Kotlin</span><span class="tech-pill">Swift</span><span class="tech-pill">Dart</span><span class="tech-pill">C#</span><span class="tech-pill">PHP</span>
+            <span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/typescript);mask-image:url(https://cdn.simpleicons.org/typescript)'></span>TypeScript</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/javascript);mask-image:url(https://cdn.simpleicons.org/javascript)'></span>JavaScript</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/python);mask-image:url(https://cdn.simpleicons.org/python)'></span>Python</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/go);mask-image:url(https://cdn.simpleicons.org/go)'></span>Go</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/rust);mask-image:url(https://cdn.simpleicons.org/rust)'></span>Rust</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/openjdk);mask-image:url(https://cdn.simpleicons.org/openjdk)'></span>Java</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/kotlin);mask-image:url(https://cdn.simpleicons.org/kotlin)'></span>Kotlin</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/swift);mask-image:url(https://cdn.simpleicons.org/swift)'></span>Swift</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/dart);mask-image:url(https://cdn.simpleicons.org/dart)'></span>Dart</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/csharp);mask-image:url(https://cdn.simpleicons.org/csharp)'></span>C#</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/php);mask-image:url(https://cdn.simpleicons.org/php)'></span>PHP</span>
           </div>
         </div>
         <div class="tech-cat">
           <div class="tech-cat-head"><div class="tech-cat-title" data-i18n="tech.cat.frontend">Frontend &amp; Mobile</div><div class="tech-cat-count">09</div></div>
           <div class="tech-pills">
-            <span class="tech-pill">React</span><span class="tech-pill">Next.js</span><span class="tech-pill">Vue</span><span class="tech-pill">Nuxt</span><span class="tech-pill">Angular</span><span class="tech-pill">React Native</span><span class="tech-pill">Flutter</span><span class="tech-pill">Expo</span><span class="tech-pill">Tailwind</span>
+            <span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/react);mask-image:url(https://cdn.simpleicons.org/react)'></span>React</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/nextdotjs);mask-image:url(https://cdn.simpleicons.org/nextdotjs)'></span>Next.js</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/vuedotjs);mask-image:url(https://cdn.simpleicons.org/vuedotjs)'></span>Vue</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/nuxtdotjs);mask-image:url(https://cdn.simpleicons.org/nuxtdotjs)'></span>Nuxt</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/angular);mask-image:url(https://cdn.simpleicons.org/angular)'></span>Angular</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/react);mask-image:url(https://cdn.simpleicons.org/react)'></span>React Native</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/flutter);mask-image:url(https://cdn.simpleicons.org/flutter)'></span>Flutter</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/expo);mask-image:url(https://cdn.simpleicons.org/expo)'></span>Expo</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/tailwindcss);mask-image:url(https://cdn.simpleicons.org/tailwindcss)'></span>Tailwind</span>
           </div>
         </div>
         <div class="tech-cat">
           <div class="tech-cat-head"><div class="tech-cat-title" data-i18n="tech.cat.backend">Backend &amp; APIs</div><div class="tech-cat-count">11</div></div>
           <div class="tech-pills">
-            <span class="tech-pill">Node.js</span><span class="tech-pill">NestJS</span><span class="tech-pill">Express</span><span class="tech-pill">FastAPI</span><span class="tech-pill">Django</span><span class="tech-pill">Spring Boot</span><span class="tech-pill">Laravel</span><span class="tech-pill">.NET Core</span><span class="tech-pill">GraphQL</span><span class="tech-pill">REST</span><span class="tech-pill">gRPC</span>
+            <span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/nodedotjs);mask-image:url(https://cdn.simpleicons.org/nodedotjs)'></span>Node.js</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/nestjs);mask-image:url(https://cdn.simpleicons.org/nestjs)'></span>NestJS</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/express);mask-image:url(https://cdn.simpleicons.org/express)'></span>Express</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/fastapi);mask-image:url(https://cdn.simpleicons.org/fastapi)'></span>FastAPI</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/django);mask-image:url(https://cdn.simpleicons.org/django)'></span>Django</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/spring);mask-image:url(https://cdn.simpleicons.org/spring)'></span>Spring Boot</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/laravel);mask-image:url(https://cdn.simpleicons.org/laravel)'></span>Laravel</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/dotnet);mask-image:url(https://cdn.simpleicons.org/dotnet)'></span>.NET Core</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/graphql);mask-image:url(https://cdn.simpleicons.org/graphql)'></span>GraphQL</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.236L18.764 8 12 11.764 5.236 8 12 4.236zM5 9.618l6 3.382v7l-6-3.382v-7zm14 0v7l-6 3.382v-7l6-3.382z'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.236L18.764 8 12 11.764 5.236 8 12 4.236zM5 9.618l6 3.382v7l-6-3.382v-7zm14 0v7l-6 3.382v-7l6-3.382z'/%3E%3C/svg%3E")'></span>REST</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.236L18.764 8 12 11.764 5.236 8 12 4.236zM5 9.618l6 3.382v7l-6-3.382v-7zm14 0v7l-6 3.382v-7l6-3.382z'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.236L18.764 8 12 11.764 5.236 8 12 4.236zM5 9.618l6 3.382v7l-6-3.382v-7zm14 0v7l-6 3.382v-7l6-3.382z'/%3E%3C/svg%3E")'></span>gRPC</span>
           </div>
         </div>
         <div class="tech-cat">
           <div class="tech-cat-head"><div class="tech-cat-title" data-i18n="tech.cat.databases">Databases</div><div class="tech-cat-count">10</div></div>
           <div class="tech-pills">
-            <span class="tech-pill">PostgreSQL</span><span class="tech-pill">MySQL</span><span class="tech-pill">MongoDB</span><span class="tech-pill">Redis</span><span class="tech-pill">Elasticsearch</span><span class="tech-pill">ClickHouse</span><span class="tech-pill">Cassandra</span><span class="tech-pill">SQLite</span><span class="tech-pill">Firestore</span><span class="tech-pill">Supabase</span>
+            <span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/postgresql);mask-image:url(https://cdn.simpleicons.org/postgresql)'></span>PostgreSQL</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/mysql);mask-image:url(https://cdn.simpleicons.org/mysql)'></span>MySQL</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/mongodb);mask-image:url(https://cdn.simpleicons.org/mongodb)'></span>MongoDB</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/redis);mask-image:url(https://cdn.simpleicons.org/redis)'></span>Redis</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/elasticsearch);mask-image:url(https://cdn.simpleicons.org/elasticsearch)'></span>Elasticsearch</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/clickhouse);mask-image:url(https://cdn.simpleicons.org/clickhouse)'></span>ClickHouse</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/apachecassandra);mask-image:url(https://cdn.simpleicons.org/apachecassandra)'></span>Cassandra</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/sqlite);mask-image:url(https://cdn.simpleicons.org/sqlite)'></span>SQLite</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/firebase);mask-image:url(https://cdn.simpleicons.org/firebase)'></span>Firestore</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/supabase);mask-image:url(https://cdn.simpleicons.org/supabase)'></span>Supabase</span>
           </div>
         </div>
         <div class="tech-cat">
           <div class="tech-cat-head"><div class="tech-cat-title" data-i18n="tech.cat.brokers">Message Brokers &amp; Queues</div><div class="tech-cat-count">06</div></div>
           <div class="tech-pills">
-            <span class="tech-pill">Kafka</span><span class="tech-pill">RabbitMQ</span><span class="tech-pill">NATS</span><span class="tech-pill">Redis Pub/Sub</span><span class="tech-pill">AWS SQS</span><span class="tech-pill">BullMQ</span>
+            <span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/apachekafka);mask-image:url(https://cdn.simpleicons.org/apachekafka)'></span>Kafka</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/rabbitmq);mask-image:url(https://cdn.simpleicons.org/rabbitmq)'></span>RabbitMQ</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.236L18.764 8 12 11.764 5.236 8 12 4.236zM5 9.618l6 3.382v7l-6-3.382v-7zm14 0v7l-6 3.382v-7l6-3.382z'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.236L18.764 8 12 11.764 5.236 8 12 4.236zM5 9.618l6 3.382v7l-6-3.382v-7zm14 0v7l-6 3.382v-7l6-3.382z'/%3E%3C/svg%3E")'></span>NATS</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/redis);mask-image:url(https://cdn.simpleicons.org/redis)'></span>Redis Pub/Sub</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/amazonaws);mask-image:url(https://cdn.simpleicons.org/amazonaws)'></span>AWS SQS</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.236L18.764 8 12 11.764 5.236 8 12 4.236zM5 9.618l6 3.382v7l-6-3.382v-7zm14 0v7l-6 3.382v-7l6-3.382z'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.236L18.764 8 12 11.764 5.236 8 12 4.236zM5 9.618l6 3.382v7l-6-3.382v-7zm14 0v7l-6 3.382v-7l6-3.382z'/%3E%3C/svg%3E")'></span>BullMQ</span>
           </div>
         </div>
         <div class="tech-cat">
           <div class="tech-cat-head"><div class="tech-cat-title" data-i18n="tech.cat.cloud">Cloud &amp; DevOps</div><div class="tech-cat-count">09</div></div>
           <div class="tech-pills">
-            <span class="tech-pill">AWS</span><span class="tech-pill">GCP</span><span class="tech-pill">Azure</span><span class="tech-pill">Docker</span><span class="tech-pill">Kubernetes</span><span class="tech-pill">Terraform</span><span class="tech-pill">GitHub Actions</span><span class="tech-pill">GitLab CI</span><span class="tech-pill">Nginx</span>
+            <span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/amazonaws);mask-image:url(https://cdn.simpleicons.org/amazonaws)'></span>AWS</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/googlecloud);mask-image:url(https://cdn.simpleicons.org/googlecloud)'></span>GCP</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/microsoftazure);mask-image:url(https://cdn.simpleicons.org/microsoftazure)'></span>Azure</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/docker);mask-image:url(https://cdn.simpleicons.org/docker)'></span>Docker</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/kubernetes);mask-image:url(https://cdn.simpleicons.org/kubernetes)'></span>Kubernetes</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/terraform);mask-image:url(https://cdn.simpleicons.org/terraform)'></span>Terraform</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/githubactions);mask-image:url(https://cdn.simpleicons.org/githubactions)'></span>GitHub Actions</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/gitlab);mask-image:url(https://cdn.simpleicons.org/gitlab)'></span>GitLab CI</span><span class="tech-pill"><span class="tp-ico" style='-webkit-mask-image:url(https://cdn.simpleicons.org/nginx);mask-image:url(https://cdn.simpleicons.org/nginx)'></span>Nginx</span>
           </div>
         </div>
       </div>
@@ -747,7 +744,7 @@ body.cs-locked{overflow:hidden}
 
 <footer>
   <div class="footer-inner">
-    <a href="#hero" class="logo"><span class="logo-mark"><svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><path class="lm-bracket" d="M 4 3 L 4 27"/><path class="lm-bracket" d="M 4 3 L 9 3"/><path class="lm-bracket" d="M 4 27 L 9 27"/><line class="lm-slash" x1="18" y1="9" x2="11" y2="20"/><circle class="lm-dot" cx="19" cy="20" r="2.6"/></svg></span><span class="logo-text"><span class="lt-key">Key</span><span class="lt-bit">bit</span></span></a>
+    <a href="#hero" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect class="lm-badge" width="32" height="32" rx="7"/><polyline class="lm-chevron" points="11,10 18,16 11,22"/><circle class="lm-dot" cx="22.5" cy="22" r="2"/></svg></span><span class="logo-text">keybit</span></a>
     <div class="footer-meta">
       <span data-i18n="footer.copy">&copy; 2026 KeyBit</span>
       <span data-i18n="footer.cities">Baku &middot; Tbilisi &middot; Warsaw</span>
