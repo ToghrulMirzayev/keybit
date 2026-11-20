@@ -39,6 +39,39 @@ Analytics, a form backend, a CRM, a chat widget, maps, embedded video, etc.:
 Note: the contact form currently does not send anything (`onsubmit="return false"`). When you connect a backend,
 the consent checkbox is already in place; list the provider in the policy.
 
-## Coming Soon overlay
+## Publishing and the "Coming soon" switch
 
-Toggle `comingSoonEnabled` in `config.js`.
+The site is published by GitHub Actions (`.github/workflows/deploy.yml`) to GitHub Pages. What gets published is decided
+by one repository **variable**:
+
+| `COMING_SOON_BANNER` | Result |
+|---|---|
+| `false` | the full website is published |
+| `true`, empty, not set, or anything else (even a typo) | only the "Coming soon" page is published |
+
+While the banner is on, the real site is **not published at all** (not just hidden behind a banner), so nothing of it
+can be read through "View source". Unknown addresses (`/privacy.html`, `/config.js`, ...) show the same placeholder.
+
+### One-time setup
+1. GitHub → repository **Settings → Pages → Build and deployment → Source: "GitHub Actions"**.
+2. (Optional, recommended) Settings → Pages → custom domain `keybit.dev`, tick "Enforce HTTPS".
+3. Settings → **Secrets and variables → Actions → Variables** → New repository variable `COMING_SOON_BANNER` = `true`.
+
+### Launch (or go back to the placeholder)
+1. Change the variable `COMING_SOON_BANNER` (`false` = live, `true` = placeholder).
+2. **Actions → Deploy site → Run workflow.** A variable change does not deploy by itself; the new state is live about a
+   minute after the run finishes. Every push to `main` also runs the workflow with the current value.
+
+Use a *variable*, not a *secret*: the result is public anyway, and a secret would be masked as `***` in logs.
+
+### Try it locally
+```
+COMING_SOON_BANNER=false node scripts/build.js   # full site -> dist/
+COMING_SOON_BANNER=true  node scripts/build.js   # placeholder only -> dist/
+python3 -m http.server -d dist 8000
+```
+`scripts/build.js` copies only an allow-list of files (add new site files there) and fails the build if the output is not
+what the mode promises. Opening `index.html` directly shows the full site (no banner) for development.
+
+Note: while the repository is public, the source code of the full site is visible on GitHub even when the placeholder is
+what visitors get. GitHub Pages from a private repository needs a paid GitHub plan.

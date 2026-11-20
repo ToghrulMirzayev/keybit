@@ -165,7 +165,7 @@ h2 em{font-style:italic;color:var(--accent2);font-weight:400}
 .tech-pill .tp-ico{width:14px;height:14px;background-color:currentColor;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;flex-shrink:0;opacity:0.8;transition:opacity 0.2s}
 .tech-pill:hover .tp-ico{opacity:1}
 #locations{background:var(--bg2)}
-.loc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem}
+.loc-grid{display:grid;grid-template-columns:minmax(0,560px);gap:1.5rem;margin-bottom:3rem}
 .loc-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;transition:all 0.3s;position:relative;overflow:hidden}
 .loc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 0.4s}
 .loc-card:hover{border-color:var(--border-accent);transform:translateY(-3px);box-shadow:var(--shadow-lg)}
@@ -238,24 +238,6 @@ footer{background:var(--bg);border-top:1px solid var(--border);padding:2.5rem 0 
 .fade-in.visible{opacity:1;transform:translateY(0)}
 @media (max-width:1024px){.services-grid{grid-template-columns:repeat(2,1fr)}.loc-grid{grid-template-columns:1fr}.why-grid{grid-template-columns:repeat(2,1fr)}.tech-wrapper,.proc-wrapper,.about-grid{grid-template-columns:1fr;gap:3rem}.about-right,.tech-sidebar,.proc-sidebar{position:static}.multi-geo{grid-template-columns:1fr;gap:2rem}.zr-highlight-box{grid-template-columns:1fr;gap:2rem}.zr-process{grid-template-columns:1fr}.zr-process::before{display:none}.hero-meta{grid-template-columns:repeat(2,1fr);gap:1.5rem 2rem}}
 @media (max-width:720px){.nav-links{display:none}.container,.nav-inner,.footer-inner,.zr-inner{padding:0 1.25rem}section{padding:5rem 0}#hero{padding:7.5rem 0 3.5rem}.services-grid{grid-template-columns:1fr}.why-grid{grid-template-columns:1fr}.zr-highlight-box{padding:2rem}.zr-checks{grid-template-columns:1fr}.contact-wrapper{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.about-left{padding-right:0}.multi-geo{padding:1.8rem}.geo-benefits{grid-template-columns:1fr}.contact-form{padding:1.5rem}.footer-inner{flex-direction:column;text-align:center}.footer-meta{flex-direction:column;gap:0.5rem}.hero-meta{margin-top:3.5rem;padding-top:2rem}}
-.coming-soon-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(241,235,224,0.55);backdrop-filter:blur(18px) saturate(1.1);-webkit-backdrop-filter:blur(18px) saturate(1.1);padding:1.5rem;animation:csFade 0.6s ease-out}
-[data-theme="dark"] .coming-soon-overlay{background:rgba(13,15,12,0.6)}
-@keyframes csFade{from{opacity:0}to{opacity:1}}
-@keyframes csUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.cs-card{background:var(--card);border:1px solid var(--border-strong);border-radius:18px;padding:3.5rem 3rem;max-width:480px;width:100%;text-align:center;box-shadow:var(--shadow-lg);position:relative;animation:csUp 0.7s cubic-bezier(.3,.7,.4,1) 0.1s both}
-.cs-logo{display:inline-flex;align-items:center;gap:11px;margin-bottom:2.2rem;font-family:'Inter',sans-serif;font-weight:700;font-size:1.5rem;color:var(--text);letter-spacing:-0.04em}
-.cs-logo .logo-mark{width:36px;height:36px}
-.cs-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--accent2);font-weight:500;margin-bottom:1.4rem;display:inline-flex;align-items:center;gap:10px;justify-content:center}
-.cs-eyebrow .cs-pulse{width:8px;height:8px;border-radius:50%;background:var(--accent);position:relative;display:inline-block}
-.cs-eyebrow .cs-pulse::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);animation:csPulse 2s ease-out infinite}
-@keyframes csPulse{0%{opacity:1;transform:scale(0.8)}100%{opacity:0;transform:scale(1.8)}}
-.cs-title{font-family:'Fraunces',serif;font-size:clamp(2.4rem,5vw,3.4rem);font-weight:400;letter-spacing:-0.03em;line-height:1.05;color:var(--text);margin-bottom:1.2rem}
-.cs-title em{font-style:italic;color:var(--accent2);font-weight:400}
-.cs-desc{font-size:0.98rem;color:var(--text2);line-height:1.7;font-weight:400;max-width:380px;margin:0 auto 2rem}
-.cs-divider{width:32px;height:1px;background:var(--border-strong);margin:0 auto 1.5rem}
-.cs-meta{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase}
-.cs-meta span{color:var(--text2)}
-body.cs-locked{overflow:hidden}
 .lang-dropdown{position:relative;display:inline-block}
 .lang-trigger{display:inline-flex;align-items:center;gap:7px;background:var(--surface2);border:1px solid var(--border-strong);border-radius:8px;padding:7px 11px;cursor:pointer;font-family:'Inter',sans-serif;color:var(--text);transition:all 0.2s;font-size:0.78rem;font-weight:500}
 .lang-trigger:hover{border-color:var(--text);background:var(--surface)}
@@ -277,8 +259,6 @@ body.cs-locked{overflow:hidden}
 </head>
 <body>
 
-<!-- Coming Soon overlay loads here from coming-soon.html when KEYBIT_FLAGS.comingSoonEnabled is true. -->
-<div id="coming-soon-mount" data-src="coming-soon.html"></div>
 
 
 <nav>
@@ -358,8 +338,8 @@ body.cs-locked{overflow:hidden}
           <div class="meta-label" data-i18n="hero.meta.demo">Average demo turnaround</div>
         </div>
         <div class="meta-item">
-          <div class="meta-num">3</div>
-          <div class="meta-label" data-i18n="hero.meta.countries">Countries across Europe &amp; Caucasus</div>
+          <div class="meta-num">AZ</div>
+          <div class="meta-label" data-i18n="hero.meta.countries">Based in Baku, Azerbaijan</div>
         </div>
         <div class="meta-item">
           <div class="meta-num">$0</div>
@@ -378,7 +358,7 @@ body.cs-locked{overflow:hidden}
         <h2 data-i18n-html="about.title.html">A software partner built on <em>proof</em>, not promises.</h2>
         <div class="about-text" style="margin-top:1.5rem;">
           <p data-i18n-html="about.p1.html">KeyBit is a software development firm founded on a straightforward principle: <strong>clients should see what they're paying for before they pay for it.</strong> We design, build, and deliver &mdash; then let the work speak for itself.</p>
-          <p data-i18n="about.p2">Our teams combine senior engineers, designers, and product thinkers distributed across Azerbaijan, Georgia, and Poland &mdash; giving you access to top-tier talent with competitive rates and flexible time-zone coverage.</p>
+          <p data-i18n="about.p2">Our team combines senior engineers, designers, and product thinkers based in Baku, Azerbaijan &mdash; giving you access to top-tier talent with competitive rates and flexible time-zone coverage.</p>
           <p data-i18n="about.p3">From MVP launches to enterprise-grade platforms, we cover the full product lifecycle with the same uncompromising attention to quality at every stage.</p>
         </div>
         <div class="about-quote" data-i18n="about.quote">Show, don't sell. Deliver, don't delay.</div>
@@ -393,7 +373,7 @@ body.cs-locked{overflow:hidden}
             <div class="about-item"><span class="about-item-num">01</span><div><div class="about-item-text" data-i18n="about.item1.title">Demo before invoice</div><span class="about-item-sub" data-i18n="about.item1.sub">Working prototype within days, not weeks</span></div></div>
             <div class="about-item"><span class="about-item-num">02</span><div><div class="about-item-text" data-i18n="about.item2.title">Senior-first staffing</div><span class="about-item-sub" data-i18n="about.item2.sub">No juniors on critical paths &mdash; ever</span></div></div>
             <div class="about-item"><span class="about-item-num">03</span><div><div class="about-item-text" data-i18n="about.item3.title">Full lifecycle coverage</div><span class="about-item-sub" data-i18n-html="about.item3.sub.html">Discovery &rarr; design &rarr; build &rarr; launch &rarr; scale</span></div></div>
-            <div class="about-item"><span class="about-item-num">04</span><div><div class="about-item-text" data-i18n="about.item4.title">Distributed team model</div><span class="about-item-sub" data-i18n="about.item4.sub">Three countries, one standard of quality</span></div></div>
+            <div class="about-item"><span class="about-item-num">04</span><div><div class="about-item-text" data-i18n="about.item4.title">Based in Baku</div><span class="about-item-sub" data-i18n="about.item4.sub">One team, one standard of quality</span></div></div>
             <div class="about-item"><span class="about-item-num">05</span><div><div class="about-item-text" data-i18n="about.item5.title">Zero lock-in engagements</div><span class="about-item-sub" data-i18n="about.item5.sub">Transparent terms, flexible commitments</span></div></div>
           </div>
         </div>
@@ -561,7 +541,7 @@ body.cs-locked{overflow:hidden}
     <div class="section-header fade-in">
       <div class="eyebrow" data-i18n="loc.eyebrow">05 &mdash; Locations</div>
       <h2 data-i18n-html="loc.title.html">Local talent. <em>Global standards.</em></h2>
-      <p class="section-desc" style="margin-top:1rem;" data-i18n="loc.desc">We operate from three countries, giving our clients access to diverse talent pools, favorable time zones, and strong engineering cultures.</p>
+      <p class="section-desc" style="margin-top:1rem;" data-i18n="loc.desc">We work from Baku, giving our clients access to strong engineering talent, favorable time zones, and competitive rates.</p>
     </div>
     <div class="loc-grid">
       <div class="loc-card fade-in">
@@ -571,38 +551,16 @@ body.cs-locked{overflow:hidden}
         </div>
         <div class="loc-desc" data-i18n="loc.az.desc">Our founding hub. Home to our leadership team, core R&amp;D, and a rapidly growing technology scene with strong engineering talent rooted in STEM education.</div>
       </div>
-      <div class="loc-card fade-in">
-        <div class="loc-head">
-          <div class="loc-code">GE</div>
-          <div><div class="loc-country" data-i18n="loc.ge.country">Georgia</div><div class="loc-city" data-i18n="loc.ge.city">Tbilisi</div></div>
-        </div>
-        <div class="loc-desc" data-i18n="loc.ge.desc">A thriving startup ecosystem with highly skilled engineers and a business-friendly environment that has attracted global companies and remote-first teams.</div>
-      </div>
-      <div class="loc-card fade-in">
-        <div class="loc-head">
-          <div class="loc-code">PL</div>
-          <div><div class="loc-country" data-i18n="loc.pl.country">Poland</div><div class="loc-city" data-i18n="loc.pl.city">Warsaw &middot; Krak&oacute;w</div></div>
-        </div>
-        <div class="loc-desc" data-i18n="loc.pl.desc">Our European gateway. EU-based operations with world-class engineers and convenient time zones for Western clients &mdash; plus full GDPR compliance.</div>
-      </div>
     </div>
     <div class="multi-geo fade-in">
       <div>
-        <div class="multi-geo-title" data-i18n-html="geo.title.html">Why <em>multi-geography</em> is your advantage</div>
-        <div class="multi-geo-sub" data-i18n="geo.sub">Three offices, three time zones, one coordinated team.</div>
+        <div class="multi-geo-title" data-i18n-html="geo.title.html">Why <em>Baku</em> works for you</div>
+        <div class="multi-geo-sub" data-i18n="geo.sub">One coordinated team, one time zone, one standard of quality.</div>
       </div>
       <div class="geo-benefits">
         <div class="geo-benefit">
           <div class="geo-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           <div><strong data-i18n="geo.b1.title">Time zone coverage</strong><div class="geo-benefit-text" data-i18n="geo.b1.desc">Overlap with Europe, Middle East, and US East Coast &mdash; your messages don't wait overnight.</div></div>
-        </div>
-        <div class="geo-benefit">
-          <div class="geo-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <div><strong data-i18n="geo.b2.title">Risk distribution</strong><div class="geo-benefit-text" data-i18n="geo.b2.desc">Teams across regions ensure business continuity regardless of local disruptions.</div></div>
-        </div>
-        <div class="geo-benefit">
-          <div class="geo-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-          <div><strong data-i18n="geo.b3.title">Talent diversity</strong><div class="geo-benefit-text" data-i18n="geo.b3.desc">Broader, complementary skill pools &mdash; different education systems and problem-solving approaches.</div></div>
         </div>
         <div class="geo-benefit">
           <div class="geo-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
@@ -759,7 +717,7 @@ body.cs-locked{overflow:hidden}
     <a href="#hero" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect class="lm-badge" width="32" height="32" rx="7"/><polyline class="lm-chevron" points="11,10 18,16 11,22"/><circle class="lm-dot" cx="22.5" cy="22" r="2"/></svg></span><span class="logo-text">keybit</span></a>
     <div class="footer-meta">
       <span data-i18n="footer.copy">&copy; 2026 KeyBit</span>
-      <span data-i18n="footer.cities">Baku &middot; Tbilisi &middot; Warsaw</span>
+      <span data-i18n="footer.cities">Baku &middot; Azerbaijan</span>
       <span data-i18n="footer.tagline">Demo first. Always.</span>
     </div>
     <div class="footer-legal">
@@ -773,22 +731,6 @@ body.cs-locked{overflow:hidden}
 <script src="config.js"></script>
 <script src="translations.js"></script>
 <script>
-(function loadComingSoon(){
-  const mount=document.getElementById('coming-soon-mount');
-  if(!mount)return;
-  const enabled=window.KEYBIT_FLAGS&&window.KEYBIT_FLAGS.comingSoonEnabled;
-  if(!enabled){mount.remove();return;}
-  const src=mount.getAttribute('data-src');
-  if(!src){mount.remove();return;}
-  document.body.classList.add('cs-locked');
-  fetch(src).then(r=>r.ok?r.text():Promise.reject()).then(html=>{
-    mount.outerHTML=html;
-    applyLang(currentLang);
-  }).catch(()=>{
-    document.body.classList.remove('cs-locked');
-    mount.remove();
-  });
-})();
 
 let currentLang='en';
 const STEP_LABELS={en:'STEP',ru:'ШАГ',az:'ADDIM'};
