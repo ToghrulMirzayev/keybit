@@ -1,0 +1,62 @@
+# Publishes the site to GitHub Pages.
+#
+# Coming soon switch: repository VARIABLE  COMING_SOON_BANNER
+#   false              -> the full website goes live
+#   true / not set     -> only the "Coming soon" page is published (the real site is not published at all)
+# See scripts/build.js. Changing the variable does NOT deploy by itself — run this workflow again
+# (Actions -> Deploy site -> Run workflow) or push to main.
+#
+# One-time setup: Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Nothing gets more rights than it needs. The deploy job below adds only what Pages requires.
+permissions:
+  contents: read
+
+# One deployment at a time; a running deployment is never cancelled half-way.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Actions are pinned to a full commit hash, so a changed or hijacked tag cannot alter what runs.
+      - name: Check out
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Build (Coming soon page or full site)
+        env:
+          # Passed as an environment variable, never pasted into the script text.
+          COMING_SOON_BANNER: ${{ vars.COMING_SOON_BANNER }}
+        run: node scripts/build.js
+
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
