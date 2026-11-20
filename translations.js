@@ -198,7 +198,31 @@ window.KEYBIT_TRANSLATIONS = {
       "cs.eyebrow.html": "<span class=\"cs-pulse\"></span> In the works",
       "cs.title.html": "Coming <em>soon.</em>",
       "cs.desc": "We're putting the finishing touches on something we're proud of. Check back shortly.",
-      "cs.cities": "Baku · Tbilisi · Warsaw"
+      "cs.cities": "Baku · Tbilisi · Warsaw",
+
+      // Legal & consent
+      "footer.privacy": "Privacy Policy",
+      "footer.terms": "Terms of Use",
+      "consent.settings": "Cookie settings",
+      "consent.title": "Your privacy",
+      "consent.desc.html": "This site stores only what it needs to work — your language, theme and cookie choice. Optional analytics and marketing tools are off, and if we ever add them they will run only if you agree. See our <a href=\"privacy.html\">Privacy Policy</a>.",
+      "consent.reject": "Reject all",
+      "consent.customize": "Customize",
+      "consent.accept": "Accept all",
+      "consent.prefs.title": "Cookie settings",
+      "consent.prefs.desc": "Choose which optional tools may run on this site. You can change your mind at any time using “Cookie settings” in the footer.",
+      "consent.cat.necessary.title": "Essential",
+      "consent.cat.necessary.desc": "Stores your language, theme and cookie choice in your browser so the site works as you expect. It never leaves your device and cannot be switched off.",
+      "consent.always": "Always on",
+      "consent.cat.analytics.title": "Analytics",
+      "consent.cat.analytics.desc": "Helps us understand how the site is used so we can improve it. Not used on this site at the moment.",
+      "consent.cat.marketing.title": "Marketing",
+      "consent.cat.marketing.desc": "Used to measure campaigns and show relevant offers. Not used on this site at the moment.",
+      "consent.save": "Save choices",
+      "consent.close": "Close",
+      "contact.form.consent.html": "I have read the <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and agree that KeyBit may process my details to respond to this request.",
+      "legal.back": "← Back to site",
+      "legal.updated": "Last updated"
     },
   
     ru: {
@@ -387,7 +411,31 @@ window.KEYBIT_TRANSLATIONS = {
       "cs.eyebrow.html": "<span class=\"cs-pulse\"></span> В работе",
       "cs.title.html": "Скоро <em>запуск.</em>",
       "cs.desc": "Мы наносим финальные штрихи на то, чем гордимся. Загляните чуть позже.",
-      "cs.cities": "Баку · Тбилиси · Варшава"
+      "cs.cities": "Баку · Тбилиси · Варшава",
+
+      // Legal & consent
+      "footer.privacy": "Политика конфиденциальности",
+      "footer.terms": "Условия использования",
+      "consent.settings": "Настройки cookie",
+      "consent.title": "Ваша конфиденциальность",
+      "consent.desc.html": "Сайт сохраняет только то, что нужно для его работы: язык, тему и ваш выбор по cookie. Необязательные аналитические и маркетинговые инструменты отключены; если мы подключим их в будущем, они будут работать только с вашего согласия. Подробнее — в <a href=\"privacy.html\">Политике конфиденциальности</a>.",
+      "consent.reject": "Отклонить все",
+      "consent.customize": "Настроить",
+      "consent.accept": "Принять все",
+      "consent.prefs.title": "Настройки cookie",
+      "consent.prefs.desc": "Выберите, какие необязательные инструменты могут работать на сайте. Передумать можно в любой момент через «Настройки cookie» внизу страницы.",
+      "consent.cat.necessary.title": "Необходимые",
+      "consent.cat.necessary.desc": "Хранят в вашем браузере язык, тему и ваш выбор по cookie, чтобы сайт работал так, как вы ожидаете. Не покидают ваше устройство и не отключаются.",
+      "consent.always": "Всегда включены",
+      "consent.cat.analytics.title": "Аналитика",
+      "consent.cat.analytics.desc": "Помогает понять, как используется сайт, чтобы мы могли его улучшать. Сейчас на сайте не используется.",
+      "consent.cat.marketing.title": "Маркетинг",
+      "consent.cat.marketing.desc": "Нужен для оценки рекламных кампаний и показа релевантных предложений. Сейчас на сайте не используется.",
+      "consent.save": "Сохранить выбор",
+      "consent.close": "Закрыть",
+      "contact.form.consent.html": "Я ознакомился(-лась) с <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Политикой конфиденциальности</a> и согласен(-на), что KeyBit обработает мои данные, чтобы ответить на это обращение.",
+      "legal.back": "← На сайт",
+      "legal.updated": "Последнее обновление"
     },
   
     az: {
@@ -576,6 +624,30 @@ window.KEYBIT_TRANSLATIONS = {
       "cs.eyebrow.html": "<span class=\"cs-pulse\"></span> İşin üstündəyik",
       "cs.title.html": "Tezliklə <em>açılır.</em>",
       "cs.desc": "Qürür duyduğumuz bir şeyə son toxunuşları edirik. Bir az sonra qayıdın.",
-      "cs.cities": "Bakı · Tbilisi · Varşava"
+      "cs.cities": "Bakı · Tbilisi · Varşava",
+
+      // Legal & consent
+      "footer.privacy": "Məxfilik Siyasəti",
+      "footer.terms": "İstifadə Şərtləri",
+      "consent.settings": "Kuki parametrləri",
+      "consent.title": "Məxfiliyiniz",
+      "consent.desc.html": "Bu sayt yalnız işləməsi üçün lazım olanları saxlayır: dilinizi, mövzunuzu və kuki seçiminizi. İxtiyari analitika və marketinq alətləri söndürülüb; gələcəkdə onları əlavə etsək, yalnız sizin razılığınızla işləyəcək. Ətraflı: <a href=\"privacy.html\">Məxfilik Siyasəti</a>.",
+      "consent.reject": "Hamısını rədd et",
+      "consent.customize": "Tənzimlə",
+      "consent.accept": "Hamısını qəbul et",
+      "consent.prefs.title": "Kuki parametrləri",
+      "consent.prefs.desc": "Bu saytda hansı ixtiyari alətlərin işləyə biləcəyini seçin. Fikrinizi istədiyiniz vaxt səhifənin altındakı “Kuki parametrləri” vasitəsilə dəyişə bilərsiniz.",
+      "consent.cat.necessary.title": "Zəruri",
+      "consent.cat.necessary.desc": "Dilinizi, mövzunuzu və kuki seçiminizi brauzerinizdə saxlayır ki, sayt gözlədiyiniz kimi işləsin. Cihazınızı tərk etmir və söndürülə bilməz.",
+      "consent.always": "Həmişə aktiv",
+      "consent.cat.analytics.title": "Analitika",
+      "consent.cat.analytics.desc": "Saytdan necə istifadə olunduğunu anlamağa kömək edir ki, onu təkmilləşdirə bilək. Hazırda bu saytda istifadə olunmur.",
+      "consent.cat.marketing.title": "Marketinq",
+      "consent.cat.marketing.desc": "Kampaniyaların ölçülməsi və uyğun təkliflərin göstərilməsi üçün istifadə olunur. Hazırda bu saytda istifadə olunmur.",
+      "consent.save": "Seçimi saxla",
+      "consent.close": "Bağla",
+      "contact.form.consent.html": "<a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Məxfilik Siyasəti</a> ilə tanış oldum və KeyBit-in bu müraciətə cavab vermək üçün məlumatlarımı emal etməsinə razıyam.",
+      "legal.back": "← Sayta qayıt",
+      "legal.updated": "Son yenilənmə"
     }
   };
