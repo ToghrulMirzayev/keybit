@@ -1,7 +1,7 @@
 # keybit
 outsource/outstaff company
 
-Static site hosted on Vercel (`keybit.dev`). Vercel builds it with `node scripts/build.js` (see `vercel.json`).
+Static site hosted on Cloudflare Workers (static assets). `node scripts/build.js` builds `dist/`, `wrangler.jsonc` uploads it.
 
 ## Legal & privacy
 
@@ -41,7 +41,7 @@ the consent checkbox is already in place; list the provider in the policy.
 
 ## Publishing and the "Coming soon" switch
 
-Vercel deploys every push to `main` to production. What it publishes is decided by one Vercel **environment variable**:
+What gets published is decided by one **build variable**, `COMING_SOON_BANNER`:
 
 | `COMING_SOON_BANNER` | Result |
 |---|---|
@@ -50,17 +50,23 @@ Vercel deploys every push to `main` to production. What it publishes is decided 
 
 While the banner is on, the real site is **not published at all** (not just hidden behind a banner), so nothing of it
 can be read through "View source". Unknown addresses (`/privacy.html`, `/config.js`, ...) show the same placeholder.
-The build is configured in `vercel.json` (Build Command `node scripts/build.js`, Output Directory `dist`).
 
-### Launch (or go back to the placeholder)
-1. Vercel → your project → **Settings → Environment Variables** → add/edit `COMING_SOON_BANNER`
-   (`false` = live, `true` = placeholder). Choose the **Production** environment.
-2. **Deployments → latest production deployment → ⋯ → Redeploy.** A changed variable only applies to *new*
-   deployments, so a redeploy (or any push to `main`) is required. The change is live as soon as the build finishes.
-3. Check the build log: it prints `Mode: LIVE (full site)` or `Mode: COMING SOON (placeholder only)`.
+### Cloudflare setup (Git-connected builds)
+Workers & Pages → `keybit` → **Settings → Build**:
+- **Build command:** `node scripts/build.js`
+- **Deploy command:** `npx wrangler deploy` (the production branch). Non-production branches keep `npx wrangler versions upload`.
+- **Root directory:** `/`
+- **Build variables:** `COMING_SOON_BANNER` = `false` (live) or `true` (placeholder).
 
-Preview deployments (branches / PRs) use the variable of the **Preview** environment; if it is not set they show the
-placeholder. Set it to `false` for Preview too if you want to review the full site there.
+Changing the variable does not deploy by itself: open Deployments → **Retry build** on the latest production build
+(or push to `main`). The build log prints `Mode: LIVE (full site)` or `Mode: COMING SOON (placeholder only)`.
+
+### Manual deploy with wrangler
+```
+npx wrangler login    # once
+COMING_SOON_BANNER=false node scripts/build.js && npx wrangler deploy   # full site
+COMING_SOON_BANNER=true  node scripts/build.js && npx wrangler deploy   # placeholder only
+```
 
 ### Try it locally
 ```

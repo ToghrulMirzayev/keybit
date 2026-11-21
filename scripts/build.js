@@ -17,8 +17,8 @@
  *      (so scripts, .git, notes, .env files and the like can never end up on the website).
  *   3. Self-check: the build fails if the result is not what the mode promises.
  *
- * On Vercel this runs as the Build Command (see vercel.json) and the Output Directory is dist/.
- * COMING_SOON_BANNER is a Vercel environment variable (Project -> Settings -> Environment Variables).
+ * On Cloudflare this runs as the Build command and wrangler.jsonc uploads dist/.
+ * COMING_SOON_BANNER is a Cloudflare build variable (Workers & Pages -> keybit -> Settings -> Build).
  *
  * Usage:  COMING_SOON_BANNER=false node scripts/build.js
  * No dependencies, Node 18+.
@@ -31,19 +31,19 @@ const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
 
 // What the full site consists of. Add new files/folders here when the site grows.
-const LIVE_FILES = ['index.html', 'privacy.html', 'terms.html', 'config.js', 'translations.js'];
+const LIVE_FILES = ['index.html', 'privacy.html', 'terms.html', 'config.js', 'translations.js', '_headers'];
 const LIVE_DIRS = ['assets'];
 
 // What the Coming soon page needs: the page itself and the self-hosted fonts.
 const SOON_PAGE = 'coming-soon.html';
 const SOON_DIRS = ['assets/fonts'];
-const SOON_FILES = ['assets/css/fonts.css'];
+const SOON_FILES = ['assets/css/fonts.css', '_headers'];
 
 const raw = process.env.COMING_SOON_BANNER;
 const live = typeof raw === 'string' && raw.trim().toLowerCase() === 'false';
 
 function note(level, msg) {
-  console.log(`${level.toUpperCase()}: ${msg}`);   // shows up in the Vercel build log
+  console.log(`${level.toUpperCase()}: ${msg}`);   // shows up in the build log
 }
 function fail(msg) { note('error', msg); process.exit(1); }
 
@@ -87,7 +87,7 @@ if (live) {
   if (!files.includes('index.html') || !read('index.html').includes('id="hero"')) fail('Live build has no real index.html.');
   if (files.includes('404.html') || read('index.html').includes('coming-soon')) fail('Live build still contains the Coming soon page.');
 } else {
-  const allowed = f => f === 'index.html' || f === '404.html' || f === 'assets/css/fonts.css' || /^assets\/fonts\/[\w.-]+\.woff2$/.test(f);
+  const allowed = f => f === 'index.html' || f === '404.html' || f === '_headers' || f === 'assets/css/fonts.css' || /^assets\/fonts\/[\w.-]+\.woff2$/.test(f);
   const extra = files.filter(f => !allowed(f));
   if (extra.length) fail('Coming soon build contains files it must not publish: ' + extra.join(', '));
   const html = read('index.html');
