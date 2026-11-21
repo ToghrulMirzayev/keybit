@@ -1,7 +1,7 @@
 # keybit
 outsource/outstaff company
 
-Static site (no build step), hosted on GitHub Pages.
+Static site hosted on Vercel (`keybit.dev`). Vercel builds it with `node scripts/build.js` (see `vercel.json`).
 
 ## Legal & privacy
 
@@ -41,8 +41,7 @@ the consent checkbox is already in place; list the provider in the policy.
 
 ## Publishing and the "Coming soon" switch
 
-The site is published by GitHub Actions (`.github/workflows/deploy.yml`) to GitHub Pages. What gets published is decided
-by one repository **variable**:
+Vercel deploys every push to `main` to production. What it publishes is decided by one Vercel **environment variable**:
 
 | `COMING_SOON_BANNER` | Result |
 |---|---|
@@ -51,18 +50,17 @@ by one repository **variable**:
 
 While the banner is on, the real site is **not published at all** (not just hidden behind a banner), so nothing of it
 can be read through "View source". Unknown addresses (`/privacy.html`, `/config.js`, ...) show the same placeholder.
-
-### One-time setup
-1. GitHub → repository **Settings → Pages → Build and deployment → Source: "GitHub Actions"**.
-2. (Optional, recommended) Settings → Pages → custom domain `keybit.dev`, tick "Enforce HTTPS".
-3. Settings → **Secrets and variables → Actions → Variables** → New repository variable `COMING_SOON_BANNER` = `true`.
+The build is configured in `vercel.json` (Build Command `node scripts/build.js`, Output Directory `dist`).
 
 ### Launch (or go back to the placeholder)
-1. Change the variable `COMING_SOON_BANNER` (`false` = live, `true` = placeholder).
-2. **Actions → Deploy site → Run workflow.** A variable change does not deploy by itself; the new state is live about a
-   minute after the run finishes. Every push to `main` also runs the workflow with the current value.
+1. Vercel → your project → **Settings → Environment Variables** → add/edit `COMING_SOON_BANNER`
+   (`false` = live, `true` = placeholder). Choose the **Production** environment.
+2. **Deployments → latest production deployment → ⋯ → Redeploy.** A changed variable only applies to *new*
+   deployments, so a redeploy (or any push to `main`) is required. The change is live as soon as the build finishes.
+3. Check the build log: it prints `Mode: LIVE (full site)` or `Mode: COMING SOON (placeholder only)`.
 
-Use a *variable*, not a *secret*: the result is public anyway, and a secret would be masked as `***` in logs.
+Preview deployments (branches / PRs) use the variable of the **Preview** environment; if it is not set they show the
+placeholder. Set it to `false` for Preview too if you want to review the full site there.
 
 ### Try it locally
 ```
@@ -74,4 +72,4 @@ python3 -m http.server -d dist 8000
 what the mode promises. Opening `index.html` directly shows the full site (no banner) for development.
 
 Note: while the repository is public, the source code of the full site is visible on GitHub even when the placeholder is
-what visitors get. GitHub Pages from a private repository needs a paid GitHub plan.
+what visitors get.

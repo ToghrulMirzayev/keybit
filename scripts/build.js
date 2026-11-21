@@ -17,6 +17,9 @@
  *      (so scripts, .git, notes, .env files and the like can never end up on the website).
  *   3. Self-check: the build fails if the result is not what the mode promises.
  *
+ * On Vercel this runs as the Build Command (see vercel.json) and the Output Directory is dist/.
+ * COMING_SOON_BANNER is a Vercel environment variable (Project -> Settings -> Environment Variables).
+ *
  * Usage:  COMING_SOON_BANNER=false node scripts/build.js
  * No dependencies, Node 18+.
  */
@@ -40,8 +43,7 @@ const raw = process.env.COMING_SOON_BANNER;
 const live = typeof raw === 'string' && raw.trim().toLowerCase() === 'false';
 
 function note(level, msg) {
-  // ::warning:: / ::error:: show up as annotations in GitHub Actions; harmless elsewhere.
-  console.log(process.env.GITHUB_ACTIONS ? `::${level}::${msg}` : `${level.toUpperCase()}: ${msg}`);
+  console.log(`${level.toUpperCase()}: ${msg}`);   // shows up in the Vercel build log
 }
 function fail(msg) { note('error', msg); process.exit(1); }
 
@@ -76,7 +78,6 @@ if (live) {
     note('warning', `COMING_SOON_BANNER="${raw}" is not "true" or "false". Treating it as "true" (Coming soon page stays up).`);
   }
 }
-fs.writeFileSync(path.join(DIST, '.nojekyll'), '');
 
 // ---------------------------------------------------------------- self-check
 const files = walk(DIST);
@@ -86,7 +87,7 @@ if (live) {
   if (!files.includes('index.html') || !read('index.html').includes('id="hero"')) fail('Live build has no real index.html.');
   if (files.includes('404.html') || read('index.html').includes('coming-soon')) fail('Live build still contains the Coming soon page.');
 } else {
-  const allowed = f => f === '.nojekyll' || f === 'index.html' || f === '404.html' || f === 'assets/css/fonts.css' || /^assets\/fonts\/[\w.-]+\.woff2$/.test(f);
+  const allowed = f => f === 'index.html' || f === '404.html' || f === 'assets/css/fonts.css' || /^assets\/fonts\/[\w.-]+\.woff2$/.test(f);
   const extra = files.filter(f => !allowed(f));
   if (extra.length) fail('Coming soon build contains files it must not publish: ' + extra.join(', '));
   const html = read('index.html');
