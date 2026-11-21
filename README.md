@@ -1,7 +1,7 @@
 # keybit
 outsource/outstaff company
 
-Static site hosted on Cloudflare Workers (static assets). `node scripts/build.js` builds `dist/`, `wrangler.jsonc` uploads it.
+Static site hosted on Cloudflare Workers (static assets), served straight from the repository root. No build step except the tiny banner script below.
 
 ## Legal & privacy
 
@@ -39,43 +39,30 @@ Analytics, a form backend, a CRM, a chat widget, maps, embedded video, etc.:
 Note: the contact form currently does not send anything (`onsubmit="return false"`). When you connect a backend,
 the consent checkbox is already in place; list the provider in the policy.
 
-## Publishing and the "Coming soon" switch
+## The "Coming soon" banner switch
 
-What gets published is decided by one **build variable**, `COMING_SOON_BANNER`:
+The overlay is controlled by one Cloudflare **build variable**, `COMING_SOON_BANNER`:
 
 | `COMING_SOON_BANNER` | Result |
 |---|---|
-| `false` | the full website is published |
-| `true`, empty, not set, or anything else (even a typo) | only the "Coming soon" page is published |
+| `false` | banner off, the full site is visible |
+| `true`, empty, not set, or anything else (even a typo) | banner on, covers the whole site |
 
-While the banner is on, the real site is **not published at all** (not just hidden behind a banner), so nothing of it
-can be read through "View source". Unknown addresses (`/privacy.html`, `/config.js`, ...) show the same placeholder.
+Cloudflare: Workers & Pages → `keybit` → **Settings → Build**:
+- **Build command:** `node scripts/apply-banner.js` (writes the value into `config.js` during the build)
+- **Deploy command:** `npx wrangler deploy` (unchanged)
+- **Build variables:** `COMING_SOON_BANNER` = `false` or `true`
 
-### Cloudflare setup (Git-connected builds)
-Workers & Pages → `keybit` → **Settings → Build**:
-- **Build command:** `node scripts/build.js`
-- **Deploy command:** `npx wrangler deploy` (the production branch). Non-production branches keep `npx wrangler versions upload`.
-- **Root directory:** `/`
-- **Build variables:** `COMING_SOON_BANNER` = `false` (live) or `true` (placeholder).
+Changing a variable does not redeploy by itself: Deployments → **Retry build** on the latest production build
+(or push to `main`). The build log prints `Coming Soon banner: ON` or `OFF`.
 
-Changing the variable does not deploy by itself: open Deployments → **Retry build** on the latest production build
-(or push to `main`). The build log prints `Mode: LIVE (full site)` or `Mode: COMING SOON (placeholder only)`.
-
-### Manual deploy with wrangler
+Manual deploy:
 ```
-npx wrangler login    # once
-COMING_SOON_BANNER=false node scripts/build.js && npx wrangler deploy   # full site
-COMING_SOON_BANNER=true  node scripts/build.js && npx wrangler deploy   # placeholder only
+COMING_SOON_BANNER=false node scripts/apply-banner.js && npx wrangler deploy
+git checkout config.js    # undo the local rewrite
 ```
 
-### Try it locally
-```
-COMING_SOON_BANNER=false node scripts/build.js   # full site -> dist/
-COMING_SOON_BANNER=true  node scripts/build.js   # placeholder only -> dist/
-python3 -m http.server -d dist 8000
-```
-`scripts/build.js` copies only an allow-list of files (add new site files there) and fails the build if the output is not
-what the mode promises. Opening `index.html` directly shows the full site (no banner) for development.
+You can also edit `comingSoonEnabled` in `config.js` by hand and commit.
 
-Note: while the repository is public, the source code of the full site is visible on GitHub even when the placeholder is
-what visitors get.
+Note: the banner is drawn in the browser on top of the page. It does not hide the page source, and the repository
+is public anyway. Do not rely on it for confidential content.
