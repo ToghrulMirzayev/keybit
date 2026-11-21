@@ -208,7 +208,11 @@ window.KEYBIT_TRANSLATIONS = {
       "consent.close": "Close",
       "contact.form.consent.html": "I have read the <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and agree that KeyBit may process my details to respond to this request.",
       "legal.back": "← Back to site",
-      "legal.updated": "Last updated"
+      "legal.updated": "Last updated",
+      "cs.eyebrow.html": "<span class=\"cs-pulse\"></span> In the works",
+      "cs.title.html": "Coming <em>soon.</em>",
+      "cs.desc": "We're putting the finishing touches on something we're proud of. Check back shortly.",
+      "cs.cities": "Baku · Azerbaijan"
     },
   
     ru: {
@@ -407,7 +411,11 @@ window.KEYBIT_TRANSLATIONS = {
       "consent.close": "Закрыть",
       "contact.form.consent.html": "Я ознакомился(-лась) с <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Политикой конфиденциальности</a> и согласен(-на), что KeyBit обработает мои данные, чтобы ответить на это обращение.",
       "legal.back": "← На сайт",
-      "legal.updated": "Последнее обновление"
+      "legal.updated": "Последнее обновление",
+      "cs.eyebrow.html": "<span class=\"cs-pulse\"></span> В работе",
+      "cs.title.html": "Скоро <em>запуск.</em>",
+      "cs.desc": "Мы наносим финальные штрихи на то, чем гордимся. Загляните чуть позже.",
+      "cs.cities": "Баку · Азербайджан"
     },
   
     az: {
@@ -606,6 +614,10 @@ window.KEYBIT_TRANSLATIONS = {
       "consent.close": "Bağla",
       "contact.form.consent.html": "<a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Məxfilik Siyasəti</a> ilə tanış oldum və KeyBit-in bu müraciətə cavab vermək üçün məlumatlarımı emal etməsinə razıyam.",
       "legal.back": "← Sayta qayıt",
-      "legal.updated": "Son yenilənmə"
+      "legal.updated": "Son yenilənmə",
+      "cs.eyebrow.html": "<span class=\"cs-pulse\"></span> İşin üstündəyik",
+      "cs.title.html": "Tezliklə <em>açılır.</em>",
+      "cs.desc": "Qürür duyduğumuz bir şeyə son toxunuşları edirik. Bir az sonra qayıdın.",
+      "cs.cities": "Bakı · Azərbaycan"
     }
   };

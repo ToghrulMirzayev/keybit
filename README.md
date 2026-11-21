@@ -1,7 +1,7 @@
 # keybit
 outsource/outstaff company
 
-Static site (no build step), hosted on GitHub Pages.
+Static site hosted on Cloudflare Workers (static assets), served straight from the repository root. No build step except the tiny banner script below.
 
 ## Legal & privacy
 
@@ -39,39 +39,30 @@ Analytics, a form backend, a CRM, a chat widget, maps, embedded video, etc.:
 Note: the contact form currently does not send anything (`onsubmit="return false"`). When you connect a backend,
 the consent checkbox is already in place; list the provider in the policy.
 
-## Publishing and the "Coming soon" switch
+## The "Coming soon" banner switch
 
-The site is published by GitHub Actions (`.github/workflows/deploy.yml`) to GitHub Pages. What gets published is decided
-by one repository **variable**:
+The overlay is controlled by one Cloudflare **build variable**, `COMING_SOON_BANNER`:
 
 | `COMING_SOON_BANNER` | Result |
 |---|---|
-| `false` | the full website is published |
-| `true`, empty, not set, or anything else (even a typo) | only the "Coming soon" page is published |
+| `false` | banner off, the full site is visible |
+| `true`, empty, not set, or anything else (even a typo) | banner on, covers the whole site |
 
-While the banner is on, the real site is **not published at all** (not just hidden behind a banner), so nothing of it
-can be read through "View source". Unknown addresses (`/privacy.html`, `/config.js`, ...) show the same placeholder.
+Cloudflare: Workers & Pages → `keybit` → **Settings → Build**:
+- **Build command:** `node scripts/apply-banner.js` (writes the value into `config.js` during the build)
+- **Deploy command:** `npx wrangler deploy` (unchanged)
+- **Build variables:** `COMING_SOON_BANNER` = `false` or `true`
 
-### One-time setup
-1. GitHub → repository **Settings → Pages → Build and deployment → Source: "GitHub Actions"**.
-2. (Optional, recommended) Settings → Pages → custom domain `keybit.dev`, tick "Enforce HTTPS".
-3. Settings → **Secrets and variables → Actions → Variables** → New repository variable `COMING_SOON_BANNER` = `true`.
+Changing a variable does not redeploy by itself: Deployments → **Retry build** on the latest production build
+(or push to `main`). The build log prints `Coming Soon banner: ON` or `OFF`.
 
-### Launch (or go back to the placeholder)
-1. Change the variable `COMING_SOON_BANNER` (`false` = live, `true` = placeholder).
-2. **Actions → Deploy site → Run workflow.** A variable change does not deploy by itself; the new state is live about a
-   minute after the run finishes. Every push to `main` also runs the workflow with the current value.
-
-Use a *variable*, not a *secret*: the result is public anyway, and a secret would be masked as `***` in logs.
-
-### Try it locally
+Manual deploy:
 ```
-COMING_SOON_BANNER=false node scripts/build.js   # full site -> dist/
-COMING_SOON_BANNER=true  node scripts/build.js   # placeholder only -> dist/
-python3 -m http.server -d dist 8000
+COMING_SOON_BANNER=false node scripts/apply-banner.js && npx wrangler deploy
+git checkout config.js    # undo the local rewrite
 ```
-`scripts/build.js` copies only an allow-list of files (add new site files there) and fails the build if the output is not
-what the mode promises. Opening `index.html` directly shows the full site (no banner) for development.
 
-Note: while the repository is public, the source code of the full site is visible on GitHub even when the placeholder is
-what visitors get. GitHub Pages from a private repository needs a paid GitHub plan.
+You can also edit `comingSoonEnabled` in `config.js` by hand and commit.
+
+Note: the banner is drawn in the browser on top of the page. It does not hide the page source, and the repository
+is public anyway. Do not rely on it for confidential content.

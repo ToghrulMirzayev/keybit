@@ -65,7 +65,7 @@ en: {
         <li>with service providers that help us run the website and communicate with you (for example hosting, email and messaging providers), under appropriate confidentiality and data-protection terms;</li>
         <li>with authorities, where the law requires it.</li>
       </ul>
-      <p>The website is currently hosted on GitHub Pages (GitHub, Inc.), which may process technical data such as IP addresses when serving pages; see GitHub’s privacy statement. If you contact us on Telegram or LinkedIn, those platforms process your data under their own policies. We never sell personal data.</p>` },
+      <p>The website is currently hosted on Cloudflare (Cloudflare, Inc., USA), which may process technical data such as IP addresses when serving pages; see Cloudflare’s privacy policy. If you contact us on Telegram or LinkedIn, those platforms process your data under their own policies. We never sell personal data.</p>` },
 
     { h: 'International transfers', html: `
       <p>Our teams and providers are located in several countries, so your data may be processed outside the country where you live, including outside the European Economic Area. Where the law requires it, we use appropriate safeguards for such transfers, such as adequacy decisions or standard contractual clauses.</p>` },
@@ -154,7 +154,7 @@ ru: {
         <li>поставщикам услуг, которые помогают нам поддерживать сайт и общаться с вами (например, хостинг, почта и мессенджеры), на условиях конфиденциальности и защиты данных;</li>
         <li>государственным органам, если этого требует закон.</li>
       </ul>
-      <p>Сейчас сайт размещён на GitHub Pages (GitHub, Inc.), который при отдаче страниц может обрабатывать технические данные, например IP-адреса; см. политику конфиденциальности GitHub. Если вы пишете нам в Telegram или LinkedIn, эти платформы обрабатывают ваши данные по собственным правилам. Мы никогда не продаём персональные данные.</p>` },
+      <p>Сейчас сайт размещён на Cloudflare (Cloudflare, Inc., США), которая при отдаче страниц может обрабатывать технические данные, например IP-адреса; см. политику конфиденциальности Cloudflare. Если вы пишете нам в Telegram или LinkedIn, эти платформы обрабатывают ваши данные по собственным правилам. Мы никогда не продаём персональные данные.</p>` },
 
     { h: 'Международная передача данных', html: `
       <p>Наши команды и поставщики находятся в разных странах, поэтому ваши данные могут обрабатываться за пределами страны вашего проживания, в том числе за пределами Европейского экономического пространства. Когда этого требует закон, мы применяем надлежащие меры защиты для таких передач, например решения об адекватности или стандартные договорные условия.</p>` },
@@ -243,7 +243,7 @@ az: {
         <li>saytın işləməsinə və sizinlə ünsiyyətə kömək edən xidmət təchizatçıları ilə (məsələn, hostinq, email və mesajlaşma provayderləri) — müvafiq məxfilik və məlumatların qorunması şərtləri ilə;</li>
         <li>qanun tələb etdikdə dövlət orqanları ilə.</li>
       </ul>
-      <p>Sayt hazırda GitHub Pages-də (GitHub, Inc.) yerləşdirilib; səhifələri təqdim edərkən o, IP ünvanları kimi texniki məlumatları emal edə bilər — GitHub-ın məxfilik bəyanatına baxın. Bizimlə Telegram və ya LinkedIn vasitəsilə əlaqə saxlasanız, bu platformalar məlumatlarınızı öz siyasətlərinə uyğun emal edir. Şəxsi məlumatları heç vaxt satmırıq.</p>` },
+      <p>Sayt hazırda Cloudflare-də (Cloudflare, Inc., ABŞ) yerləşdirilib; səhifələri təqdim edərkən o, IP ünvanları kimi texniki məlumatları emal edə bilər — Cloudflare-in məxfilik siyasətinə baxın. Bizimlə Telegram və ya LinkedIn vasitəsilə əlaqə saxlasanız, bu platformalar məlumatlarınızı öz siyasətlərinə uyğun emal edir. Şəxsi məlumatları heç vaxt satmırıq.</p>` },
 
     { h: 'Beynəlxalq ötürmələr', html: `
       <p>Komandalarımız və təchizatçılarımız bir neçə ölkədə yerləşir, ona görə də məlumatlarınız yaşadığınız ölkədən kənarda, o cümlədən Avropa İqtisadi Məkanından kənarda emal oluna bilər. Qanun tələb etdikdə belə ötürmələr üçün müvafiq təminatlardan, məsələn, adekvatlıq qərarlarından və ya standart müqavilə bəndlərindən istifadə edirik.</p>` },

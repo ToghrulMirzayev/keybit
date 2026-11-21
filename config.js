@@ -1,3 +1,15 @@
+// KeyBit feature flags
+//
+// Coming Soon overlay: true = overlay ON (covers the whole site), false = overlay OFF (full site visible).
+//
+// You normally do NOT edit this by hand. On Cloudflare the value is set at build time from the
+// build variable COMING_SOON_BANNER (true / false) by `node scripts/apply-banner.js`.
+// Editing it here still works too: commit and the site updates on the next deploy.
+
+window.KEYBIT_FLAGS = {
+    comingSoonEnabled: true
+  };
+
 // Legal details used by privacy.html and terms.html.
 //
 // Empty values fall back to defaults: company = "KeyBit", governing law and courts = Azerbaijan (Baku).
